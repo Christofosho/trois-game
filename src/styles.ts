@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { CARD_HEIGHT, CARD_WIDTH, COLOUR_BACKGROUND, COLOUR_BORDER, COLOUR_TEXT } from './constants';
 
 export const globalStyles = StyleSheet.create({
@@ -8,7 +8,6 @@ export const globalStyles = StyleSheet.create({
 
   wrapper: {
     flex: 1,
-    flexDirection: 'column',
     justifyContent: 'space-between',
     backgroundColor: COLOUR_BACKGROUND,
   },
@@ -33,6 +32,52 @@ export const globalStyles = StyleSheet.create({
     marginVertical: 5,
     borderTopWidth: 1,
     borderTopColor: COLOUR_BORDER,
+  },
+
+  menu: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: COLOUR_BACKGROUND,
+  },
+  title: {
+    fontSize: 72,
+    color: COLOUR_TEXT,
+  },
+  buttonColumn: {
+    width: '80%',
+    gap: 40,
+  },
+  columnButton: {
+    width: '100%',
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderColor: COLOUR_BORDER,
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    fontSize: 32,
+    color: COLOUR_TEXT,
+    textAlign: 'center',
+  },
+
+  gameTitle: {
+    flex: 1,
+    fontSize: 30,
+    color: 'black',
+    textAlign: 'center',
+    paddingVertical: 5,
+  },
+  gameButton: {
+    width: '30%',
+    paddingVertical: 5,
+    borderColor: COLOUR_BORDER,
+  },
+  gameButtonLeft: {
+    borderRightWidth: 1,
+  },
+  gameButtonRight: {
+    borderLeftWidth: 1,
   },
 
   cardImage: {
