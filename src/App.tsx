@@ -2,68 +2,33 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   Dimensions, FlatList, Image,
   ImageSourcePropType, Pressable,
-  SafeAreaView, ScrollView, StyleSheet, Text,
+  SafeAreaView, StyleSheet, Text,
   ToastAndroid, View,
 } from 'react-native';
 
-const showKey = false;
-
-const LANDING = 0;
-const MODE = 1;
-const GAME = 2;
-const SUMMARY = 3;
-const HOW = 4;
-
-const MODE_BASIC = 0;
-const MODE_TIMED = 1;
-const MODE_ZEN = 2;
-
-const NONE = 0;
-const GAME_MODES = 1;
-const MATCHES = 2;
-
-const VALUE = 0;
-const SHAPE = 1;
-const COUNT = 2;
-const COLOUR = 3;
-const FILL = 4;
-const IMAGE = 5;
-
-const STANDARD_HAND_SIZE = 12;
-const MAX_HAND_SIZE = 18;
-
-const COLOUR_TEXT = '#222222';
-const COLOUR_BORDER = '#DDDDDD';
-const COLOUR_BACKGROUND = '#FFFFFF';
-
-const CARD_HEIGHT = 76;
-const CARD_WIDTH = 48;
-
-const secondInterval = 1000;
-const matchesNeeded = 10;
-
-// Strings
-const TITLE = 'Trois';
-const NEW_GAME = 'New Game';
-const HOW_TO = 'How to Play';
-const RESTART = 'Restart';
-const END = 'End';
-const POINTS = 'Points';
-const DRAW = 'Draw';
-const GAME_SUMMARY = 'Game Summary';
-const BASIC = 'Basic';
-const TIMED = 'Timed';
-const ZEN = 'Zen';
-
-const TOAST_HAND_TOO_LARGE = `Max hand size of ${MAX_HAND_SIZE}!`;
-const TOAST_DECK_TOO_SMALL = 'No cards left in deck!';
-const TOAST_THREE_SELECTED_MAX = 'Maximum 3 selected cards!';
-const TOAST_MATCH_SUCCESS = 'Match found!';
-const TOAST_PLUS_THREE_POINTS = '+3 points';
-const TOAST_PLUS_ONE_POINT = '+1 point';
-const TOAST_MINUS_ONE_POINT = '-1 point';
-const TOAST_MATCH_FAILURE = 'No match!';
-const TOAST_GAME_COMPLETE = 'Game over!';
+import { globalStyles } from './styles';
+import {
+  BASIC, CARD_HEIGHT, CARD_WIDTH,
+  COLOUR, COLOUR_BACKGROUND, COLOUR_BORDER,
+  COLOUR_TEXT, COUNT, DRAW,
+  END, FILL,
+  GAME, GAME_SUMMARY, HOW,
+  HOW_TO, IMAGE, LANDING,
+  MAX_HAND_SIZE, MODE, MODE_BASIC,
+  MODE_TIMED, MODE_ZEN,
+  NEW_GAME, POINTS,
+  RESTART, SHAPE, STANDARD_HAND_SIZE,
+  SUMMARY, TIMED, TITLE, TOAST_DECK_TOO_SMALL,
+  TOAST_GAME_COMPLETE, TOAST_HAND_TOO_LARGE,
+  TOAST_MATCH_FAILURE, TOAST_MATCH_SUCCESS,
+  TOAST_MINUS_ONE_POINT, TOAST_PLUS_ONE_POINT,
+  TOAST_PLUS_THREE_POINTS, TOAST_THREE_SELECTED_MAX,
+  VALUE, ZEN,
+  MATCHES_NEEDED,
+  secondInterval,
+  showKey
+} from './constants';
+import HowToMenu from './components/HowToMenu';
 
 type Card = [number, number, number, number, number, ImageSourcePropType];
 type Deck = Card[];
@@ -188,7 +153,6 @@ export default () => {
   const [selected, setSelected] = useState<number[]>([]);
   const [points, setPoints] = useState<number>(0);
   const [gameMode, setGameMode] = useState<number>(MODE_BASIC);
-  const [howToVisible, setHowToVisible] = useState<number>(NONE);
 
   const timer = useRef<number>();
   const [time, setTime] = useState<number>(0);
@@ -217,18 +181,20 @@ export default () => {
         }
 
         // Remove the used cards from the hand
+        let nextDeck: Deck = deck.slice();
         let nextHand = hand.filter(h => !selected.includes(h[VALUE]));
-
-        // TODO: If not MODE_BASIC shuffle selected back into hand.
 
         // If the hand is less than 9 cards,
         // add up to 9 cards.
         if (deck.length > 0 && nextHand.length < STANDARD_HAND_SIZE) {
-          let nextDeck: Deck;
-          [nextDeck, nextHand] = drawThree(deck, nextHand);
-          setDeck(nextDeck);
+          [nextDeck, nextHand] = drawThree(nextDeck, nextHand);
         }
 
+        if (gameMode !== MODE_BASIC) {
+          nextDeck.concat(hand.filter(h => selected.includes(h[VALUE])));
+        }
+
+        setDeck(nextDeck);
         setHand(nextHand);
       }
       else {
@@ -257,7 +223,7 @@ export default () => {
   }, [points]);
 
   const checkWin = () => {
-    return hand.length === 0 || (gameMode === MODE_TIMED && points === matchesNeeded);
+    return hand.length === 0 || (gameMode === MODE_TIMED && points === MATCHES_NEEDED);
   };
 
   const chooseMode = () => setView(MODE);
@@ -348,152 +314,6 @@ export default () => {
   };
 
   const toggleHowTo = () => setView(HOW);
-  const toggleGameModes = () => (
-    setHowToVisible(howToVisible === GAME_MODES ? NONE : GAME_MODES)
-  );
-  const toggleMatches = () => (
-    setHowToVisible(howToVisible === MATCHES ? NONE : MATCHES)
-  );
-
-  const renderHowTo = () => {
-    const showHowToGameModes = howToVisible === GAME_MODES ? 'flex' : 'none';
-    const showHowToMatches = howToVisible === MATCHES ? 'flex' : 'none';
-    return (
-      <View style={styles.game}>
-        <View style={styles.header}>
-          <Text style={styles.howToTitle}>{HOW_TO}</Text>
-          <Pressable
-            style={styles.closeButton}
-            onPress={toLanding}>
-            <Text style={styles.closeButtonText}>x</Text>
-          </Pressable>
-        </View>
-        <ScrollView style={styles.content}>
-          <Text style={styles.howToContentText}>
-            Trois is the French word for "three".
-          </Text>
-          <Text style={styles.howToContentText}>
-            In the game of Trois, there are many groups of three.
-            There are three different shapes, which come in three different counts,
-            and can have three different fillings, and three different colours.
-          </Text>
-          <Pressable style={styles.howToToggle} onPress={toggleGameModes}>
-            <Text style={[styles.buttonText, styles.toggleButtonText]}>Game Modes</Text>
-            <Text style={styles.buttonText}>{howToVisible === GAME_MODES ? '-' : '+'}</Text>
-          </Pressable>
-          <View style={{ display: showHowToGameModes }}>
-            <Text style={styles.howToContentText}>
-              There are three game modes in Trois:
-            </Text>
-            <Text style={styles.howToContentListItem}>
-              <Text style={styles.underline}>Basic Mode</Text>:
-              Try to hit 81 points, gain 3 points for a match,
-              lose 1 point for a mistake, 81 unique cards.
-            </Text>
-            <Text style={styles.howToContentListItem}>
-              <Text style={styles.underline}>Timed Mode</Text>:
-              Work toward {matchesNeeded} matches in as little time as possible.
-              Used cards reshuffle into the deck.
-            </Text>
-            <Text style={styles.howToContentListItem}>
-              <Text style={styles.underline}>Zen Mode</Text>:
-              Play forever, with no loss of points.
-              Used cards will reshuffle into the deck.
-            </Text>
-          </View>
-          <Pressable style={styles.howToToggle} onPress={toggleMatches}>
-            <Text style={[styles.buttonText, styles.toggleButtonText]}>
-              Finding a Match
-            </Text>
-            <Text style={styles.buttonText}>{howToVisible === MATCHES ? '-' : '+'}</Text>
-          </Pressable>
-          <View style={{ display: showHowToMatches }}>
-            <Text style={styles.howToContentText}>
-              To score points, you must choose three cards that, for each of the 4
-              characteristics (shape, colour, count, fill), are either entirely
-              distinct, or all the exact same. If two cards have a matching
-              characteristic, and the third does not, it will not be counted as
-              a match under the game rules.
-            </Text>
-            <Text style={styles.howToContentText}>
-              Match conditions include each of the following:
-            </Text>
-            <Text style={styles.howToContentListItem}>
-              All but one feature of the cards are matching.
-            </Text>
-            <Text style={styles.howToContentListSubItem}>
-              Example 1: colour, count and fill match, but shape does not; or
-            </Text>
-            <View style={styles.cardRow}>
-              <Image source={images[0]} style={styles.cardImage} />
-              <Image source={images[1]} style={styles.cardImage} />
-              <Image source={images[2]} style={styles.cardImage} />
-            </View>
-            <Text style={styles.howToContentListSubItem}>
-              Example 2: fill, shape and count match, but colour does not.
-            </Text>
-            <View style={styles.cardRow}>
-              <Image source={images[2]} style={styles.cardImage} />
-              <Image source={images[5]} style={styles.cardImage} />
-              <Image source={images[8]} style={styles.cardImage} />
-            </View>
-            <Text style={styles.howToContentListItem}>
-              Two features of the cards are matching, and two features are entirely distinct.
-            </Text>
-            <Text style={styles.howToContentListSubItem}>
-              Example 1: shape and count match, but fill and colour do not; or
-            </Text>
-            <View style={styles.cardRow}>
-              <Image source={images[13]} style={styles.cardImage} />
-              <Image source={images[37]} style={styles.cardImage} />
-              <Image source={images[70]} style={styles.cardImage} />
-            </View>
-            <Text style={styles.howToContentListSubItem}>
-              Example 2: colour and shape match, but count and fill do not.
-            </Text>
-            <View style={styles.cardRow}>
-              <Image source={images[76]} style={styles.cardImage} />
-              <Image source={images[13]} style={styles.cardImage} />
-              <Image source={images[31]} style={styles.cardImage} />
-            </View>
-            <Text style={styles.howToContentListItem}>
-              Three of the four features of the cards are matching, and one feature does not.
-            </Text>
-            <Text style={styles.howToContentListSubItem}>
-              Example 1: shape matches, but count, fill and colour do not; or
-            </Text>
-            <View style={styles.cardRow}>
-              <Image source={images[6]} style={styles.cardImage} />
-              <Image source={images[39]} style={styles.cardImage} />
-              <Image source={images[72]} style={styles.cardImage} />
-            </View>
-            <Text style={styles.howToContentListSubItem}>
-              Example 2: colour matches, but shape, count and fill do not.
-            </Text>
-            <View style={styles.cardRow}>
-              <Image source={images[58]} style={styles.cardImage} />
-              <Image source={images[50]} style={styles.cardImage} />
-              <Image source={images[12]} style={styles.cardImage} />
-            </View>
-            <Text style={styles.howToContentListItem}>
-              None of the features of the cards are matching.
-            </Text>
-            <Text style={styles.howToContentListSubItem}>
-              Example: shape, count, fill and colour are all different.
-            </Text>
-            <View style={styles.cardRow}>
-              <Image source={images[1]} style={styles.cardImage} />
-              <Image source={images[41]} style={styles.cardImage} />
-              <Image source={images[78]} style={styles.cardImage} />
-            </View>
-          </View>
-        </ScrollView>
-        <View style={styles.footer}>
-          <Text>Copyright &copy; Christopher (Christofosho) Snow</Text>
-        </View>
-      </View>
-    );
-  };
 
   const showGameSummary = () => {
     setView(SUMMARY);
@@ -514,7 +334,7 @@ export default () => {
         {showKey
         ? <Text style={{ fontWeight }}>{cardKey(item)}</Text>
         : <Image source={item[IMAGE]}
-            style={styles.cardImage} />
+            style={globalStyles.cardImage} />
         }
       </Pressable>
     );
@@ -552,53 +372,53 @@ export default () => {
   );
 
   const renderSummary = () => (
-    <View style={styles.game}>
-      <View style={styles.header}>
+    <View style={globalStyles.wrapper}>
+      <View style={globalStyles.header}>
         <Text style={styles.gameTitle}>{GAME_SUMMARY}</Text>
       </View>
-      <View style={styles.content}>
+      <View style={globalStyles.content}>
         {gameMode === MODE_TIMED
-        ? <Text style={styles.buttonText}>{points} matches in {time} seconds</Text>
-        : <Text style={styles.buttonText}>Final Score: {points} / 81</Text>}
+        ? <Text style={globalStyles.buttonText}>{points} matches in {time} seconds</Text>
+        : <Text style={globalStyles.buttonText}>Final Score: {points} / 81</Text>}
       </View>
-      <View style={styles.footer}>
+      <View style={globalStyles.footer}>
         <Pressable style={[styles.gameButton, styles.gameButtonLeft]} onPress={toLanding}>
-          <Text style={styles.buttonText}>Menu</Text>
+          <Text style={globalStyles.buttonText}>Menu</Text>
         </Pressable>
         <Pressable style={styles.gameButton} onPress={getGameStartFunction}>
-          <Text style={styles.buttonText}>Again</Text>
+          <Text style={globalStyles.buttonText}>Again</Text>
         </Pressable>
         <Pressable style={[styles.gameButton, styles.gameButtonRight]} onPress={chooseMode}>
-          <Text style={styles.buttonText}>New</Text>
+          <Text style={globalStyles.buttonText}>New</Text>
         </Pressable>
       </View>
     </View>
   );
 
   const renderGame = () => (
-    <SafeAreaView style={styles.game}>
-      <View style={styles.header}>
-        <Text style={[styles.buttonText, styles.gameButton, styles.gameButtonLeft]}>{TITLE}</Text>
+    <SafeAreaView style={globalStyles.wrapper}>
+      <View style={globalStyles.header}>
+        <Text style={[globalStyles.buttonText, styles.gameButton, styles.gameButtonLeft]}>{TITLE}</Text>
         <Text style={styles.gameTitle}>{
           gameMode === MODE_TIMED ? TIMED :
           gameMode === MODE_ZEN ? ZEN :
           BASIC
         }</Text>
         <Pressable style={[styles.gameButton, styles.gameButtonRight]} onPress={getGameStartFunction}>
-          <Text style={styles.buttonText}>{RESTART}</Text>
+          <Text style={globalStyles.buttonText}>{RESTART}</Text>
         </Pressable>
       </View>
       {renderCards()}
-      <View style={styles.footer}>
+      <View style={globalStyles.footer}>
         <Pressable style={[styles.gameButton, styles.gameButtonLeft]} onPress={showGameSummary}>
-          <Text style={styles.buttonText}>{END}</Text>
+          <Text style={globalStyles.buttonText}>{END}</Text>
         </Pressable>
         <Text style={styles.points}>
           {gameMode === MODE_TIMED ? time
           : `${POINTS}: ${points}`}
         </Text>
         <Pressable style={[styles.gameButton, styles.gameButtonRight]} onPress={draw}>
-          <Text style={styles.buttonText}>{DRAW}</Text>
+          <Text style={globalStyles.buttonText}>{DRAW}</Text>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -625,7 +445,7 @@ export default () => {
       case SUMMARY:
         return renderSummary();
       case HOW:
-        return renderHowTo();
+        return <HowToMenu images={images} toLanding={toLanding} />;
       case GAME:
         return renderGame();
       case LANDING:
@@ -634,11 +454,7 @@ export default () => {
     }
   };
 
-  return (
-    <>
-      {getViewComponent()}
-    </>
-  );
+  return getViewComponent();
 };
 
 const styles = StyleSheet.create({
@@ -674,12 +490,6 @@ const styles = StyleSheet.create({
 
   // GAME
 
-  game: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    backgroundColor: COLOUR_BACKGROUND,
-  },
   gameButton: {
     width: '30%',
     paddingVertical: 5,
@@ -690,15 +500,6 @@ const styles = StyleSheet.create({
   },
   gameButtonRight: {
     borderLeftWidth: 1,
-  },
-  header: {
-    height: 50,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: COLOUR_BORDER,
   },
   gameTitle: {
     flex: 1,
@@ -713,10 +514,6 @@ const styles = StyleSheet.create({
   cardColumn: {
     justifyContent: 'space-around',
   },
-  cardRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
   card: {
     height: CARD_HEIGHT + 8,
     width: CARD_WIDTH + 8,
@@ -725,20 +522,6 @@ const styles = StyleSheet.create({
     borderColor: COLOUR_BORDER,
     borderRadius: 5,
   },
-  cardImage: {
-    height: CARD_HEIGHT,
-    width: CARD_WIDTH,
-    resizeMode: 'cover',
-  },
-  footer: {
-    height: 50,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginVertical: 5,
-    borderTopWidth: 1,
-    borderTopColor: COLOUR_BORDER,
-  },
   points: {
     flex: 1,
     fontSize: 24,
@@ -746,67 +529,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     color: COLOUR_TEXT,
   },
-  buttonText: {
-    fontSize: 24,
-    textAlign: 'center',
-    color: COLOUR_TEXT,
-  },
-  toggleButtonText: {
-    alignSelf: 'flex-start',
-    marginBottom: 20,
-  },
   verticalCardGap: {
     height: 5,
-  },
-  closeButtonText: {
-    fontSize: 28,
-    color: COLOUR_TEXT,
-  },
-  content: {
-    flex: 1,
-    marginHorizontal: 10,
-  },
-  howToTitle: {
-    flex: 1,
-    fontSize: 32,
-    color: COLOUR_TEXT,
-    marginLeft: 20,
-  },
-  closeButton: {
-    marginRight: 20,
-  },
-  howToContentText: {
-    fontSize: 20,
-    color: COLOUR_TEXT,
-    marginHorizontal: 10,
-    marginBottom: 15,
-  },
-  howToContentListItem: {
-    fontSize: 18,
-    color: COLOUR_TEXT,
-    marginHorizontal: 10,
-    marginBottom: 10,
-  },
-  howToContentListSubItem: {
-    fontSize: 16,
-    color: COLOUR_TEXT,
-    marginHorizontal: 10,
-    marginBottom: 5,
-    paddingLeft: 10,
-    borderLeftWidth: 1,
-    borderLeftColor: COLOUR_BORDER,
-  },
-  howToToggle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderTopWidth: 1,
-    borderTopColor: COLOUR_BORDER,
-    paddingTop: 25,
-    marginTop: 10,
-    marginHorizontal: 10,
-  },
-
-  underline: {
-    textDecorationLine: 'underline',
   },
 });
