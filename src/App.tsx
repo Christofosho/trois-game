@@ -7,6 +7,7 @@ import Landing from './components/Landing';
 import ModeSelector from './components/ModeSelector';
 import GameSummary from './components/GameSummary';
 import GameBoard from './components/GameBoard';
+import { Match } from './types';
 
 const images = [
   require('./images/card00.png'), require('./images/card01.png'), require('./images/card02.png'),
@@ -45,6 +46,8 @@ export default () => {
   const [gameMode, setGameMode] = useState<number>(MODE_BASIC);
   const [time, setTime] = useState<number>(0);
 
+  const [matches, setMatches] = useState<Match[]>([]);
+
   const chooseMode = () => setView(MODE);
 
   const getGameStartFunction = () => {
@@ -55,6 +58,14 @@ export default () => {
     setPoints(0);
     setView(GAME);
     setGameMode(mode);
+  };
+
+  const addSelection = (_match: Match) => {
+    setMatches([
+      ...matches,
+      _match,
+    ]);
+
   };
 
   const toLanding = () => {
@@ -79,6 +90,7 @@ export default () => {
             points={points}
             time={time}
             toLanding={toLanding}
+            matches={matches}
           />
         );
       case HOW:
@@ -100,6 +112,7 @@ export default () => {
             setView={setView}
             startGame={startGame}
             time={time}
+            addSelection={addSelection}
           />
         );
       case LANDING:
@@ -108,6 +121,7 @@ export default () => {
           <Landing
             chooseMode={chooseMode}
             toggleHowTo={toggleHowTo}
+            images={images}
           />
         );
     }

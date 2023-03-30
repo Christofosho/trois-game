@@ -94,7 +94,7 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
           <Text style={styles.howToContentListSubItem}>
             Example 1: colour, count and fill match, but shape does not; or
           </Text>
-          <View style={styles.cardRow}>
+          <View style={globalStyles.cardRow}>
             <Image source={images[0]} style={globalStyles.cardImage} />
             <Image source={images[1]} style={globalStyles.cardImage} />
             <Image source={images[2]} style={globalStyles.cardImage} />
@@ -102,7 +102,7 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
           <Text style={styles.howToContentListSubItem}>
             Example 2: fill, shape and count match, but colour does not.
           </Text>
-          <View style={styles.cardRow}>
+          <View style={globalStyles.cardRow}>
             <Image source={images[2]} style={globalStyles.cardImage} />
             <Image source={images[5]} style={globalStyles.cardImage} />
             <Image source={images[8]} style={globalStyles.cardImage} />
@@ -113,7 +113,7 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
           <Text style={styles.howToContentListSubItem}>
             Example 1: shape and count match, but fill and colour do not; or
           </Text>
-          <View style={styles.cardRow}>
+          <View style={globalStyles.cardRow}>
             <Image source={images[13]} style={globalStyles.cardImage} />
             <Image source={images[37]} style={globalStyles.cardImage} />
             <Image source={images[70]} style={globalStyles.cardImage} />
@@ -121,7 +121,7 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
           <Text style={styles.howToContentListSubItem}>
             Example 2: colour and shape match, but count and fill do not.
           </Text>
-          <View style={styles.cardRow}>
+          <View style={globalStyles.cardRow}>
             <Image source={images[76]} style={globalStyles.cardImage} />
             <Image source={images[13]} style={globalStyles.cardImage} />
             <Image source={images[31]} style={globalStyles.cardImage} />
@@ -132,7 +132,7 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
           <Text style={styles.howToContentListSubItem}>
             Example 1: shape matches, but count, fill and colour do not; or
           </Text>
-          <View style={styles.cardRow}>
+          <View style={globalStyles.cardRow}>
             <Image source={images[6]} style={globalStyles.cardImage} />
             <Image source={images[39]} style={globalStyles.cardImage} />
             <Image source={images[72]} style={globalStyles.cardImage} />
@@ -140,7 +140,7 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
           <Text style={styles.howToContentListSubItem}>
             Example 2: colour matches, but shape, count and fill do not.
           </Text>
-          <View style={styles.cardRow}>
+          <View style={globalStyles.cardRow}>
             <Image source={images[58]} style={globalStyles.cardImage} />
             <Image source={images[50]} style={globalStyles.cardImage} />
             <Image source={images[12]} style={globalStyles.cardImage} />
@@ -151,7 +151,7 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
           <Text style={styles.howToContentListSubItem}>
             Example: shape, count, fill and colour are all different.
           </Text>
-          <View style={styles.cardRow}>
+          <View style={globalStyles.cardRow}>
             <Image source={images[1]} style={globalStyles.cardImage} />
             <Image source={images[41]} style={globalStyles.cardImage} />
             <Image source={images[78]} style={globalStyles.cardImage} />
@@ -208,9 +208,5 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     marginTop: 10,
     marginHorizontal: 10,
-  },
-  cardRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
   },
 });

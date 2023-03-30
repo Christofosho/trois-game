@@ -1,5 +1,9 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import { CARD_HEIGHT, CARD_WIDTH, COLOUR_BACKGROUND, COLOUR_BORDER, COLOUR_TEXT } from './constants';
+import {
+  CARD_HEIGHT, CARD_WIDTH, COLOUR_BACKGROUND,
+  COLOUR_BACKGROUND_CONTRAST, COLOUR_BORDER, COLOUR_TEXT,
+  COLOR_BLACK,
+} from './constants';
 
 export const globalStyles = StyleSheet.create({
   underline: {
@@ -19,6 +23,12 @@ export const globalStyles = StyleSheet.create({
     marginBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: COLOUR_BORDER,
+    backgroundColor: COLOUR_BACKGROUND_CONTRAST,
+    shadowColor: COLOR_BLACK,
+    shadowOffset: {width: -1, height: 3},
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 5,
   },
   content: {
     flex: 1,
@@ -32,17 +42,23 @@ export const globalStyles = StyleSheet.create({
     marginVertical: 5,
     borderTopWidth: 1,
     borderTopColor: COLOUR_BORDER,
+    backgroundColor: COLOUR_BACKGROUND_CONTRAST,
+    shadowColor: COLOR_BLACK,
+    shadowOffset: {width: 2, height: 3},
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 5,
   },
 
   menu: {
     flex: 1,
     width: Dimensions.get('window').width,
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLOUR_BACKGROUND,
   },
   title: {
-    fontSize: 72,
+    fontSize: 92,
     color: COLOUR_TEXT,
   },
   buttonColumn: {
@@ -59,6 +75,12 @@ export const globalStyles = StyleSheet.create({
     fontSize: 32,
     color: COLOUR_TEXT,
     textAlign: 'center',
+    backgroundColor: COLOUR_BACKGROUND_CONTRAST,
+    shadowColor: COLOR_BLACK,
+    shadowOffset: {width: -1, height: 3},
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 5,
   },
 
   gameTitle: {
@@ -80,6 +102,24 @@ export const globalStyles = StyleSheet.create({
     borderLeftWidth: 1,
   },
 
+  cardRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  card: {
+    height: CARD_HEIGHT + 8,
+    width: CARD_WIDTH + 8,
+    padding: 3,
+    borderWidth: 1,
+    borderColor: COLOUR_BORDER,
+    borderRadius: 6,
+    backgroundColor: COLOUR_BACKGROUND_CONTRAST,
+    shadowColor: COLOR_BLACK,
+    shadowOffset: {width: -2, height: 3},
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 5,
+  },
   cardImage: {
     height: CARD_HEIGHT,
     width: CARD_WIDTH,

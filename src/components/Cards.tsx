@@ -1,8 +1,10 @@
-import React, { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, {
+  FlatList, Image, Pressable,
+  StyleSheet, Text, View
+} from 'react-native';
 import { Card } from '../types';
 import {
-  CARD_HEIGHT, CARD_WIDTH, COLOUR,
-  COLOUR_BORDER, COUNT, FILL,
+  CARD_HEIGHT, COLOUR, COUNT, FILL,
   IMAGE, SHAPE, VALUE, showKey,
 } from '../constants';
 import { globalStyles } from '../styles';
@@ -14,10 +16,9 @@ interface ICardProps {
 }
 const CardComponent = ({ item, isSelected, selectCard }: ICardProps): JSX.Element => {
   const fontWeight = isSelected ? 'bold' : 'normal';
-  const backgroundColor = isSelected ? '#EEEEEE' : undefined;
   const selectedOutline = isSelected ? { borderWidth: 1, borderColor: '#AA0000' } : null;
   return (
-    <Pressable style={[styles.card, { backgroundColor }, selectedOutline ]}
+    <Pressable style={[globalStyles.card, selectedOutline ]}
       onPress={() => selectCard(item[VALUE])}>
       {showKey
       ? <Text style={{ fontWeight }}>{cardKey(item)}</Text>
@@ -73,14 +74,6 @@ const styles = StyleSheet.create({
   },
   cardColumn: {
     justifyContent: 'space-around',
-  },
-  card: {
-    height: CARD_HEIGHT + 8,
-    width: CARD_WIDTH + 8,
-    padding: 3,
-    borderWidth: 1,
-    borderColor: COLOUR_BORDER,
-    borderRadius: 5,
   },
   verticalCardGap: {
     height: 5,

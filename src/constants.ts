@@ -1,3 +1,5 @@
+import { Dimensions } from 'react-native';
+
 export const showKey = false;
 
 export const LANDING = 0;
@@ -24,12 +26,14 @@ export const IMAGE = 5;
 export const STANDARD_HAND_SIZE = 12;
 export const MAX_HAND_SIZE = 18;
 
+export const COLOR_BLACK = 'black';
 export const COLOUR_TEXT = '#222222';
 export const COLOUR_BORDER = '#DDDDDD';
-export const COLOUR_BACKGROUND = '#FFFFFF';
+export const COLOUR_BACKGROUND = '#EEEEEE';
+export const COLOUR_BACKGROUND_CONTRAST = '#FFFFFF';
 
-export const CARD_HEIGHT = 76;
-export const CARD_WIDTH = 48;
+export const CARD_HEIGHT = Dimensions.get('screen').height / 8.5;
+export const CARD_WIDTH = CARD_HEIGHT * 0.63;
 
 export const secondInterval = 1000;
 export const MATCHES_NEEDED = 10;

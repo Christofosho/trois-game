@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import { globalStyles } from '../styles';
-import { Card } from '../types';
+import { Card, Match } from '../types';
 
 import {
   BASIC, COLOUR_TEXT, DRAW, END, MAX_HAND_SIZE,
@@ -38,6 +38,7 @@ interface IGameBoardProps {
   setView: (_view: number) => void,
   startGame: () => void,
   time: number,
+  addSelection: (_match: Match) => void,
 }
 
 export default ({
@@ -50,6 +51,7 @@ export default ({
   setView,
   startGame,
   time,
+  addSelection,
 }: IGameBoardProps) => {
   const [deck, setDeck] = useState<Card[]>([]);
   const [hand, setHand] = useState<Card[]>([]);
@@ -73,9 +75,14 @@ export default ({
 
   useEffect(() => {
     if (selected.length === 3) {
-      const match = checkCards(
-        selected.map(s => hand.find(h => h[VALUE] === s) as Card)
-      );
+      const selectedCards = selected.map(s => hand.find(h => h[VALUE] === s) as Card);
+      const match = checkCards(selectedCards);
+
+      addSelection({
+        match: selectedCards,
+        success: match,
+      });
+
       if (match) {
         let nextPoints = points;
         if (gameMode === MODE_BASIC) {
