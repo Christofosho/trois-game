@@ -56,6 +56,7 @@ export default () => {
 
   const startGame = (mode: number = gameMode) => {
     setPoints(0);
+    setMatches([]);
     setView(GAME);
     setGameMode(mode);
   };
