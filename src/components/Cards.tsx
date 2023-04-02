@@ -16,7 +16,15 @@ interface ICardProps {
 }
 const CardComponent = ({ item, isSelected, selectCard }: ICardProps): JSX.Element => {
   const fontWeight = isSelected ? 'bold' : 'normal';
-  const selectedOutline = isSelected ? { borderWidth: 1, borderColor: '#AA0000' } : null;
+  const selectedOutline = isSelected ? {
+    borderWidth: 1,
+    borderColor: 'rgba(60, 0, 0, 0.4)',
+    elevation: 15,
+    shadowOpacity: 0.1,
+    shadowOffset: {
+      height: 2, width: 6,
+    },
+  } : null;
   return (
     <Pressable style={[globalStyles.card, selectedOutline ]}
       onPress={() => selectCard(item[VALUE])}>
@@ -62,6 +70,7 @@ export default ({ hand, selected, selectCard }: ICardsProps): JSX.Element => {
       renderItem={renderCard}
       keyExtractor={cardKey}
       columnWrapperStyle={styles.cardColumn}
+      contentContainerStyle={styles.content}
       ItemSeparatorComponent={renderVerticalCardGap}
       getItemLayout={getItemLayout}
     />
@@ -70,6 +79,9 @@ export default ({ hand, selected, selectCard }: ICardsProps): JSX.Element => {
 
 const styles = StyleSheet.create({
   cards: {
+    flex: 1,
+  },
+  content: {
     flex: 1,
   },
   cardColumn: {
