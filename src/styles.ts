@@ -118,7 +118,7 @@ export const globalStyles = StyleSheet.create({
     shadowOffset: {width: -2, height: 3},
     shadowOpacity: 0.2,
     shadowRadius: 2,
-    elevation: 5,
+    elevation: 3,
   },
   cardImage: {
     height: CARD_HEIGHT,
