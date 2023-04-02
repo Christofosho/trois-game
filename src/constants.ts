@@ -32,7 +32,7 @@ export const COLOUR_BORDER = '#DDDDDD';
 export const COLOUR_BACKGROUND = '#EEEEEE';
 export const COLOUR_BACKGROUND_CONTRAST = '#FFFFFF';
 
-export const CARD_HEIGHT = Dimensions.get('screen').height / 8.5;
+export const CARD_HEIGHT = Dimensions.get('screen').height / 9;
 export const CARD_WIDTH = CARD_HEIGHT * 0.63;
 
 export const secondInterval = 1000;
