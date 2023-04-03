@@ -46,7 +46,7 @@ export const globalStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginVertical: 5,
+    marginTop: 5,
     borderTopWidth: 1,
     borderTopColor: COLOUR_BORDER,
     backgroundColor: COLOUR_BACKGROUND_CONTRAST,

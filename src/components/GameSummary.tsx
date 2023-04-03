@@ -44,7 +44,9 @@ export default ({
       {matches.map((match, index: number) => {
         return (
           <View key={index} style={styles.matchrow}>
-            <View style={styles.spacer} />
+            <View style={styles.index}>
+              <Text style={styles.indexText}>{index + 1}</Text>
+            </View>
             <View style={[globalStyles.cardRow, styles.cardRow, styles.cardGap]}>
               <View style={globalStyles.card}>
                 <Image source={match.match[0][IMAGE]} style={globalStyles.cardImage} />
@@ -56,10 +58,10 @@ export default ({
                 <Image source={match.match[2][IMAGE]} style={globalStyles.cardImage} />
               </View>
             </View>
-            <View style={styles.icon}>
+            <View style={styles.iconContainer}>
               {match.success
-              ? <Icon name="checkcircle" size={40} color={'#ACF3AE'} />
-              : <Icon name="closecircle" size={40} color={'#FA6B84'} />
+              ? <Icon name="checkcircle" size={25} color={'#ACF3AE'} style={styles.icon} />
+              : <Icon name="closecircle" size={25} color={'#FA6B84'} style={styles.icon} />
               }
             </View>
           </View>
@@ -85,18 +87,26 @@ const styles = StyleSheet.create({
   matchrow: {
     flexDirection: 'row',
     marginTop: 10,
+    marginBottom: '10%',
     alignSelf: 'center',
   },
   cardRow: {
-    marginBottom: '10%',
+    flex: 1,
   },
-  cardGap: { gap: 20 },
+  cardGap: { gap: 5 },
+  iconContainer: {
+    width: '10%',
+    justifyContent: 'center',
+  },
   icon: {
     alignSelf: 'center',
-    marginLeft: 10,
   },
-  spacer: {
-    width: 40,
-    marginRight: 10,
+  index: {
+    width: '10%',
+    justifyContent: 'center',
+  },
+  indexText: {
+    fontSize: 20,
+    alignSelf: 'center',
   },
 });

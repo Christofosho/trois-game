@@ -18,7 +18,7 @@ const CardComponent = ({ item, isSelected, selectCard }: ICardProps): JSX.Elemen
   const fontWeight = isSelected ? 'bold' : 'normal';
   const selectedOutline = isSelected ? {
     borderWidth: 1,
-    borderColor: 'rgba(60, 0, 0, 0.4)',
+    borderColor: 'rgba(60, 0, 0, 0.5)',
     elevation: 15,
     shadowOpacity: 0.1,
     shadowOffset: {
