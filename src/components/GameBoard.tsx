@@ -31,27 +31,27 @@ const toast = (message: string) => {
 interface IGameBoardProps {
   gameMode: number,
   images: ImageSourcePropType[],
-  mode: number,
   points: number,
+  time: number,
+  addSelection: (_match: Match) => void,
+  setDraws: (_draws: (_t: number) => number) => void,
   setPoints: (_points: number) => void,
   setTime: (_time: (_t: number) => number) => void,
   setView: (_view: number) => void,
   startGame: () => void,
-  time: number,
-  addSelection: (_match: Match) => void,
 }
 
 export default ({
   gameMode,
   images,
-  mode,
   points,
+  time,
+  addSelection,
+  setDraws,
   setPoints,
   setTime,
   setView,
   startGame,
-  time,
-  addSelection,
 }: IGameBoardProps) => {
   const [deck, setDeck] = useState<Card[]>([]);
   const [hand, setHand] = useState<Card[]>([]);
@@ -163,7 +163,7 @@ export default ({
     if (timer){
       clearInterval(timer.current as number);
     }
-    if (mode === MODE_TIMED) {
+    if (gameMode === MODE_TIMED) {
       setTime(_t => 0);
       timer.current = setInterval(() => setTime(t => t + 1), secondInterval);
     }
@@ -187,6 +187,7 @@ export default ({
     const [nextDeck, nextHand] = drawThree(deck, hand);
     setDeck(nextDeck);
     setHand(nextHand);
+    setDraws(_d => ++_d);
     setSelected([]);
   };
 

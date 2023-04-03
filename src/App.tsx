@@ -45,7 +45,7 @@ export default () => {
   const [points, setPoints] = useState<number>(0);
   const [gameMode, setGameMode] = useState<number>(MODE_BASIC);
   const [time, setTime] = useState<number>(0);
-
+  const [draws, setDraws] = useState<number>(0);
   const [matches, setMatches] = useState<Match[]>([]);
 
   const chooseMode = () => setView(MODE);
@@ -55,10 +55,11 @@ export default () => {
   };
 
   const startGame = (mode: number = gameMode) => {
+    setDraws(0);
+    setGameMode(mode);
     setPoints(0);
     setMatches([]);
     setView(GAME);
-    setGameMode(mode);
   };
 
   const addSelection = (_match: Match) => {
@@ -85,13 +86,14 @@ export default () => {
       case SUMMARY:
         return (
           <GameSummary
-            chooseMode={chooseMode}
+            draws={draws}
             gameMode={gameMode}
-            getGameStartFunction={getGameStartFunction}
+            matches={matches}
             points={points}
             time={time}
+            chooseMode={chooseMode}
+            getGameStartFunction={getGameStartFunction}
             toLanding={toLanding}
-            matches={matches}
           />
         );
       case HOW:
@@ -106,14 +108,14 @@ export default () => {
           <GameBoard
             gameMode={gameMode}
             images={images}
-            mode={gameMode}
             points={points}
+            time={time}
+            addSelection={addSelection}
+            setDraws={setDraws}
             setPoints={setPoints}
             setTime={setTime}
             setView={setView}
             startGame={startGame}
-            time={time}
-            addSelection={addSelection}
           />
         );
       case LANDING:

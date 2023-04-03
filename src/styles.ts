@@ -9,6 +9,13 @@ export const globalStyles = StyleSheet.create({
   underline: {
     textDecorationLine: 'underline',
   },
+  horizontalRule: {
+    height: 1,
+    width: '80%',
+    backgroundColor: COLOR_BLACK,
+    marginVertical: 10,
+    alignSelf: 'center',
+  },
 
   wrapper: {
     flex: 1,

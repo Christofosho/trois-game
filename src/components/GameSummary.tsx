@@ -4,29 +4,31 @@ import React, {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-import { GAME_SUMMARY, IMAGE, MODE_TIMED } from '../constants';
+import { GAME_SUMMARY, IMAGE, MODE_BASIC, MODE_TIMED, MODE_ZEN } from '../constants';
 import { globalStyles } from '../styles';
 import { Match } from '../types';
 import { ScrollView } from 'react-native';
 
 interface IGameSummaryProps {
-  chooseMode: () => void,
+  draws: number,
   gameMode: number,
-  getGameStartFunction: () => void,
+  matches: Match[],
   points: number,
   time: number,
+  chooseMode: () => void,
+  getGameStartFunction: () => void,
   toLanding: () => void,
-  matches: Match[],
 }
 
 export default ({
-  chooseMode,
+  draws,
   gameMode,
-  getGameStartFunction,
+  matches,
   points,
   time,
+  chooseMode,
+  getGameStartFunction,
   toLanding,
-  matches,
 }: IGameSummaryProps) => (
   <View style={globalStyles.wrapper}>
     <View style={globalStyles.header}>
@@ -35,7 +37,9 @@ export default ({
     <View style={globalStyles.content}>
       {gameMode === MODE_TIMED
       ? <Text style={globalStyles.buttonText}>{points} matches in {time} seconds</Text>
-      : <Text style={globalStyles.buttonText}>Final Score: {points} / 81</Text>}
+      : <Text style={globalStyles.buttonText}>Final Score: {points}{gameMode === MODE_BASIC ? '/ 81' : ''}</Text>}
+      {gameMode !== MODE_ZEN && <Text style={globalStyles.buttonText}>Total draw count: {draws}</Text>}
+      {matches.length > 0 && <View style={globalStyles.horizontalRule} />}
       <ScrollView>
       {matches.map((match, index: number) => {
         return (

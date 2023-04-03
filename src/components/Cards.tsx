@@ -1,6 +1,6 @@
 import React, {
   FlatList, Image, Pressable,
-  StyleSheet, Text, View
+  StyleSheet, Text, View,
 } from 'react-native';
 import { Card } from '../types';
 import {
