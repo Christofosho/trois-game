@@ -67,7 +67,6 @@ export default () => {
       ...matches,
       _match,
     ]);
-
   };
 
   const toLanding = () => {
@@ -75,60 +74,57 @@ export default () => {
   };
 
   const toggleHowTo = () => setView(HOW);
-  const getViewComponent = () => {
-    switch (view) {
-      case MODE:
-        return (
-          <ModeSelector
-            startGame={startGame}
-          />
-        );
-      case SUMMARY:
-        return (
-          <GameSummary
-            draws={draws}
-            gameMode={gameMode}
-            matches={matches}
-            points={points}
-            time={time}
-            chooseMode={chooseMode}
-            getGameStartFunction={getGameStartFunction}
-            toLanding={toLanding}
-          />
-        );
-      case HOW:
-        return (
-          <HowToMenu
-            images={images}
-            toLanding={toLanding}
-          />
-        );
-      case GAME:
-        return (
-          <GameBoard
-            gameMode={gameMode}
-            images={images}
-            points={points}
-            time={time}
-            addSelection={addSelection}
-            setDraws={setDraws}
-            setPoints={setPoints}
-            setTime={setTime}
-            setView={setView}
-            startGame={startGame}
-          />
-        );
-      case LANDING:
-      default:
-        return (
-          <Landing
-            chooseMode={chooseMode}
-            toggleHowTo={toggleHowTo}
-            images={images}
-          />
-        );
-    }
-  };
 
-  return getViewComponent();
+  switch (view) {
+    case MODE:
+      return (
+        <ModeSelector
+          startGame={startGame}
+        />
+      );
+    case SUMMARY:
+      return (
+        <GameSummary
+          draws={draws}
+          gameMode={gameMode}
+          matches={matches}
+          points={points}
+          time={time}
+          chooseMode={chooseMode}
+          getGameStartFunction={getGameStartFunction}
+          toLanding={toLanding}
+        />
+      );
+    case HOW:
+      return (
+        <HowToMenu
+          images={images}
+          toLanding={toLanding}
+        />
+      );
+    case GAME:
+      return (
+        <GameBoard
+          gameMode={gameMode}
+          images={images}
+          points={points}
+          time={time}
+          addSelection={addSelection}
+          setDraws={setDraws}
+          setPoints={setPoints}
+          setTime={setTime}
+          setView={setView}
+          startGame={startGame}
+        />
+      );
+    case LANDING:
+    default:
+      return (
+        <Landing
+          chooseMode={chooseMode}
+          toggleHowTo={toggleHowTo}
+          images={images}
+        />
+      );
+  }
 };
