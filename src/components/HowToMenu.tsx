@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import {
   StyleSheet, View, Text,
   Pressable, ScrollView, Image,
-  ImageSourcePropType } from 'react-native';
+  ImageSourcePropType } from "react-native";
 
 import {
   COLOUR_BORDER, COLOUR_TEXT, GAME_MODES, HOW_TO, MATCHES, NONE, MATCHES_NEEDED,
-} from '../constants';
+} from "../constants";
 
-import { globalStyles } from '../styles';
+import { globalStyles } from "../styles";
 
 interface IHowToMenuProps {
   images: ImageSourcePropType[],
@@ -26,8 +26,8 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
     setHowToVisible(howToVisible === MATCHES ? NONE : MATCHES)
   );
 
-  const showHowToGameModes = howToVisible === GAME_MODES ? 'flex' : 'none';
-  const showHowToMatches = howToVisible === MATCHES ? 'flex' : 'none';
+  const showHowToGameModes = howToVisible === GAME_MODES ? "flex" : "none";
+  const showHowToMatches = howToVisible === MATCHES ? "flex" : "none";
   return (
     <View style={globalStyles.wrapper}>
       <View style={globalStyles.header}>
@@ -49,7 +49,7 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
         </Text>
         <Pressable style={styles.howToToggle} onPress={toggleGameModes}>
           <Text style={[globalStyles.buttonText, globalStyles.toggleButtonText]}>Game Modes</Text>
-          <Text style={globalStyles.buttonText}>{howToVisible === GAME_MODES ? '-' : '+'}</Text>
+          <Text style={globalStyles.buttonText}>{howToVisible === GAME_MODES ? "-" : "+"}</Text>
         </Pressable>
         <View style={{ display: showHowToGameModes }}>
           <Text style={styles.howToContentText}>
@@ -75,7 +75,7 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
           <Text style={[globalStyles.buttonText, globalStyles.toggleButtonText]}>
             Finding a Match
           </Text>
-          <Text style={globalStyles.buttonText}>{howToVisible === MATCHES ? '-' : '+'}</Text>
+          <Text style={globalStyles.buttonText}>{howToVisible === MATCHES ? "-" : "+"}</Text>
         </Pressable>
         <View style={{ display: showHowToMatches }}>
           <Text style={styles.howToContentText}>
@@ -201,8 +201,8 @@ const styles = StyleSheet.create({
     borderLeftColor: COLOUR_BORDER,
   },
   howToToggle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     borderTopWidth: 1,
     borderTopColor: COLOUR_BORDER,
     paddingTop: 25,

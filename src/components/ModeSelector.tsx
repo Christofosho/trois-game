@@ -1,6 +1,6 @@
-import React, { Pressable, SafeAreaView, Text, View } from 'react-native';
-import { globalStyles } from '../styles';
-import { BASIC, MODE_BASIC, MODE_TIMED, MODE_ZEN, TIMED, ZEN } from '../constants';
+import React, { Pressable, SafeAreaView, Text, View } from "react-native";
+import { globalStyles } from "../styles";
+import { BASIC, MODE_BASIC, MODE_TIMED, MODE_ZEN, TIMED, ZEN } from "../constants";
 
 interface IModeSelectorProps {
   startGame: (_mode: number) => void,

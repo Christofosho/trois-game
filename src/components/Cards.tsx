@@ -1,45 +1,12 @@
-import React, {
-  FlatList, Image, Pressable,
-  StyleSheet, Text, View,
-} from 'react-native';
-import { Card } from '../types';
-import {
-  CARD_HEIGHT, COLOUR, COUNT, FILL,
-  IMAGE, SHAPE, VALUE, showKey,
-} from '../constants';
-import { globalStyles } from '../styles';
+import React, { FlatList, StyleSheet, Text, View } from "react-native";
 
-interface ICardProps {
-  item: Card,
-  isSelected: boolean,
-  selectCard: (_value: number) => void
-}
-const CardComponent = ({ item, isSelected, selectCard }: ICardProps): JSX.Element => {
-  const fontWeight = isSelected ? 'bold' : 'normal';
-  const selectedOutline = isSelected ? {
-    borderWidth: 1,
-    borderColor: 'rgba(60, 0, 0, 0.5)',
-    elevation: 15,
-    shadowOpacity: 0.1,
-    shadowOffset: {
-      height: 2, width: 6,
-    },
-  } : null;
-  return (
-    <Pressable style={[globalStyles.card, selectedOutline ]}
-      onPress={() => selectCard(item[VALUE])}>
-      {showKey
-      ? <Text style={{ fontWeight }}>{cardKey(item)}</Text>
-      : <Image source={item[IMAGE]}
-          style={globalStyles.cardImage} />
-      }
-    </Pressable>
-  );
-};
+import CardComponent from "./Card";
 
-const cardKey = (card: Card) => {
-  return `${card[SHAPE]}-${card[COUNT]}-${card[COLOUR]}-${card[FILL]}`;
-};
+import { CARD_HEIGHT, NO_CARDS_REMAINING, VALUE } from "../constants";
+
+import { cardKey } from "../utils/deck";
+
+import { Card } from "../types";
 
 const getItemLayout = (_data: Card[] | null | undefined, index: number) => (
   {length: CARD_HEIGHT, offset: CARD_HEIGHT * index, index}
@@ -54,6 +21,13 @@ interface ICardsProps {
 }
 
 export default ({ hand, selected, selectCard }: ICardsProps): JSX.Element => {
+  if (hand.length === 0) {
+    return (
+      <Text style={styles.noCards}>
+        {NO_CARDS_REMAINING}
+      </Text>
+    );
+  }
   const renderCard = ({ item }: { item: Card }) => (
     <CardComponent
       item={item}
@@ -85,9 +59,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardColumn: {
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
   },
   verticalCardGap: {
     height: 5,
+  },
+  noCards: {
+    flex: 1,
   },
 });

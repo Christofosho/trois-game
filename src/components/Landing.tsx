@@ -1,6 +1,6 @@
-import React, { Image, ImageSourcePropType, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { TITLE, NEW_GAME, HOW_TO } from '../constants';
-import { globalStyles } from '../styles';
+import React, { Image, ImageSourcePropType, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { TITLE, NEW_GAME, HOW_TO } from "../constants";
+import { globalStyles } from "../styles";
 
 interface ILandingProps {
   chooseMode: () => void,
@@ -35,10 +35,10 @@ export default ({ chooseMode, toggleHowTo, images }: ILandingProps) => (
 
 const styles = StyleSheet.create({
   title: {
-    marginBottom: '10%',
+    marginBottom: "10%",
   },
   cardRow: {
-    marginBottom: '10%',
+    marginBottom: "10%",
   },
   cardGap: { gap: 20 },
 });

@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
   ImageSourcePropType,
   Pressable,
   SafeAreaView, StyleSheet, Text,
   ToastAndroid, View,
-} from 'react-native';
+} from "react-native";
 
-import { globalStyles } from '../styles';
-import { Card, Match } from '../types';
+import { globalStyles } from "../styles";
+import { Card, Match } from "../types";
 
 import {
   BASIC, COLOUR_TEXT, DRAW, END, MAX_HAND_SIZE,
@@ -19,10 +19,10 @@ import {
   TOAST_MINUS_ONE_POINT, TOAST_PLUS_ONE_POINT,
   TOAST_PLUS_THREE_POINTS, TOAST_THREE_SELECTED_MAX,
   VALUE, ZEN, MATCHES_NEEDED, secondInterval,
-} from '../constants';
+} from "../constants";
 
-import { checkCards, drawThree, getNewDeck, shuffle } from '../utils/deck';
-import Cards from '../components/Cards';
+import { checkCards, drawThree, getNewDeck, shuffle } from "../utils/deck";
+import Cards from "../components/Cards";
 
 const toast = (message: string) => {
   ToastAndroid.show(message, ToastAndroid.SHORT);
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   points: {
     flex: 1,
     fontSize: 24,
-    textAlign: 'center',
+    textAlign: "center",
     paddingVertical: 5,
     color: COLOUR_TEXT,
   },

@@ -1,32 +1,32 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from "react-native";
 import {
   CARD_HEIGHT, CARD_WIDTH, COLOUR_BACKGROUND,
   COLOUR_BACKGROUND_CONTRAST, COLOUR_BORDER, COLOUR_TEXT,
   COLOR_BLACK,
-} from './constants';
+} from "./constants";
 
 export const globalStyles = StyleSheet.create({
   underline: {
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
   horizontalRule: {
     height: 1,
-    width: '80%',
+    width: "80%",
     backgroundColor: COLOR_BLACK,
     marginVertical: 10,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 
   wrapper: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     backgroundColor: COLOUR_BACKGROUND,
   },
   header: {
     height: 50,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     marginBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: COLOUR_BORDER,
@@ -43,9 +43,9 @@ export const globalStyles = StyleSheet.create({
   },
   footer: {
     height: 50,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     marginTop: 5,
     borderTopWidth: 1,
     borderTopColor: COLOUR_BORDER,
@@ -59,9 +59,9 @@ export const globalStyles = StyleSheet.create({
 
   menu: {
     flex: 1,
-    width: Dimensions.get('window').width,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: Dimensions.get("window").width,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: COLOUR_BACKGROUND,
   },
   title: {
@@ -69,11 +69,11 @@ export const globalStyles = StyleSheet.create({
     color: COLOUR_TEXT,
   },
   buttonColumn: {
-    width: '80%',
+    width: "80%",
     gap: 40,
   },
   columnButton: {
-    width: '100%',
+    width: "100%",
     borderBottomWidth: 1,
     borderTopWidth: 1,
     borderColor: COLOUR_BORDER,
@@ -81,7 +81,7 @@ export const globalStyles = StyleSheet.create({
     paddingHorizontal: 25,
     fontSize: 32,
     color: COLOUR_TEXT,
-    textAlign: 'center',
+    textAlign: "center",
     backgroundColor: COLOUR_BACKGROUND_CONTRAST,
     shadowColor: COLOR_BLACK,
     shadowOffset: {width: -1, height: 3},
@@ -93,12 +93,12 @@ export const globalStyles = StyleSheet.create({
   gameTitle: {
     flex: 1,
     fontSize: 30,
-    color: 'black',
-    textAlign: 'center',
+    color: "black",
+    textAlign: "center",
     paddingVertical: 5,
   },
   gameButton: {
-    width: '30%',
+    width: "30%",
     paddingVertical: 5,
     borderColor: COLOUR_BORDER,
   },
@@ -110,8 +110,8 @@ export const globalStyles = StyleSheet.create({
   },
 
   cardRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    flexDirection: "row",
+    justifyContent: "space-evenly",
   },
   card: {
     height: CARD_HEIGHT + 8,
@@ -130,15 +130,15 @@ export const globalStyles = StyleSheet.create({
   cardImage: {
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   buttonText: {
     fontSize: 24,
-    textAlign: 'center',
+    textAlign: "center",
     color: COLOUR_TEXT,
   },
   toggleButtonText: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     marginBottom: 20,
   },
 });

@@ -1,13 +1,13 @@
 import React, {
   View, Text, Pressable,
   Image, StyleSheet,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+} from "react-native";
+import Icon from "react-native-vector-icons/AntDesign";
 
-import { GAME_SUMMARY, IMAGE, MODE_BASIC, MODE_TIMED, MODE_ZEN } from '../constants';
-import { globalStyles } from '../styles';
-import { Match } from '../types';
-import { ScrollView } from 'react-native';
+import { GAME_SUMMARY, IMAGE, MODE_BASIC, MODE_TIMED, MODE_ZEN } from "../constants";
+import { globalStyles } from "../styles";
+import { Match } from "../types";
+import { ScrollView } from "react-native";
 
 interface IGameSummaryProps {
   draws: number,
@@ -37,7 +37,7 @@ export default ({
     <View style={globalStyles.content}>
       {gameMode === MODE_TIMED
       ? <Text style={globalStyles.buttonText}>{points} matches in {time} seconds</Text>
-      : <Text style={globalStyles.buttonText}>Final Score: {points}{gameMode === MODE_BASIC ? '/ 81' : ''}</Text>}
+      : <Text style={globalStyles.buttonText}>Final Score: {points}{gameMode === MODE_BASIC ? "/ 81" : ""}</Text>}
       {gameMode !== MODE_ZEN && <Text style={globalStyles.buttonText}>Total draw count: {draws}</Text>}
       {matches.length > 0 && <View style={globalStyles.horizontalRule} />}
       <ScrollView>
@@ -60,8 +60,8 @@ export default ({
             </View>
             <View style={styles.iconContainer}>
               {match.success
-              ? <Icon name="checkcircle" size={25} color={'#ACF3AE'} style={styles.icon} />
-              : <Icon name="closecircle" size={25} color={'#FA6B84'} style={styles.icon} />
+              ? <Icon name="checkcircle" size={25} color={"#ACF3AE"} style={styles.icon} />
+              : <Icon name="closecircle" size={25} color={"#FA6B84"} style={styles.icon} />
               }
             </View>
           </View>
@@ -85,28 +85,28 @@ export default ({
 
 const styles = StyleSheet.create({
   matchrow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 10,
-    marginBottom: '10%',
-    alignSelf: 'center',
+    marginBottom: "10%",
+    alignSelf: "center",
   },
   cardRow: {
     flex: 1,
   },
   cardGap: { gap: 5 },
   iconContainer: {
-    width: '10%',
-    justifyContent: 'center',
+    width: "10%",
+    justifyContent: "center",
   },
   icon: {
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   index: {
-    width: '10%',
-    justifyContent: 'center',
+    width: "10%",
+    justifyContent: "center",
   },
   indexText: {
     fontSize: 20,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 });

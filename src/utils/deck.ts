@@ -1,6 +1,6 @@
-import { ImageSourcePropType } from 'react-native';
-import { Card, CardAttribute } from '../types';
-import { SHAPE, COUNT, COLOUR, FILL } from '../constants';
+import { ImageSourcePropType } from "react-native";
+import { Card, CardAttribute } from "../types";
+import { SHAPE, COUNT, COLOUR, FILL } from "../constants";
 
 export const generateDeck = (images: ImageSourcePropType[]): Card[] => {
   let cardNumber = 0;
@@ -69,4 +69,8 @@ export const drawThree = (deck: Card[], hand: Card[]) => {
     --drawCount;
   }
   return [nextDeck, nextHand];
+};
+
+export const cardKey = (card: Card) => {
+  return `${card[SHAPE]}-${card[COUNT]}-${card[COLOUR]}-${card[FILL]}`;
 };
