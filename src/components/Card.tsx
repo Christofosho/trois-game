@@ -13,18 +13,12 @@ interface ICardProps {
 }
 export default ({ item, isSelected, selectCard }: ICardProps): JSX.Element => {
   const fontWeight = isSelected ? "bold" : "normal";
-  const selectedOutline = isSelected ? {
-    borderWidth: 1,
-    borderColor: "rgba(60, 0, 0, 0.5)",
-    elevation: 15,
-    shadowOpacity: 0.1,
-    shadowOffset: {
-      height: 2, width: 6,
-    },
-  } : null;
+
   return (
-    <Pressable style={[globalStyles.card, selectedOutline ]}
-      onPress={() => selectCard(item[VALUE])}>
+    <Pressable style={[
+      globalStyles.card,
+      isSelected ? globalStyles.cardSelected : null,
+    ]} onPress={() => selectCard(item[VALUE])}>
       {showKey
       ? <Text style={{ fontWeight }}>{cardKey(item)}</Text>
       : <Image source={item[IMAGE]}

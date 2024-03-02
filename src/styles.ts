@@ -116,8 +116,8 @@ export const globalStyles = StyleSheet.create({
   card: {
     height: CARD_HEIGHT + 8,
     width: CARD_WIDTH + 8,
-    padding: 3,
-    borderWidth: 1,
+    padding: 2,
+    borderWidth: 2,
     borderColor: COLOUR_BORDER,
     borderRadius: 6,
     backgroundColor: COLOUR_BACKGROUND_CONTRAST,
@@ -127,10 +127,15 @@ export const globalStyles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 3,
   },
+  cardSelected: {
+    borderColor: "rgba(0, 0, 0, 0.4)",
+
+  },
   cardImage: {
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
     resizeMode: "cover",
+    backgroundColor: COLOUR_BACKGROUND_CONTRAST,
   },
   buttonText: {
     fontSize: 24,
