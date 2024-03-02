@@ -1,4 +1,4 @@
-package com.trois
+package com.troisgame
 
 import android.app.Application
 import com.facebook.react.PackageList
