@@ -40,7 +40,7 @@ export const MATCHES_NEEDED = 10;
 
 // Strings
 export const TITLE = "Trois";
-export const NEW_GAME = "New Game";
+export const PLAY_GAME = "Play Game";
 export const HOW_TO = "How to Play";
 export const RESTART = "Restart";
 export const END = "End";

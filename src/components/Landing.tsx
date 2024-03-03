@@ -1,5 +1,5 @@
 import React, { Image, ImageSourcePropType, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { TITLE, NEW_GAME, HOW_TO } from "../constants";
+import { TITLE, PLAY_GAME, HOW_TO } from "../constants";
 import { globalStyles } from "../styles";
 
 interface ILandingProps {
@@ -24,7 +24,7 @@ export default ({ chooseMode, toggleHowTo, images }: ILandingProps) => (
     </View>
     <View style={globalStyles.buttonColumn}>
       <Pressable onPress={chooseMode}>
-        <Text style={globalStyles.columnButton}>{NEW_GAME}</Text>
+        <Text style={globalStyles.columnButton}>{PLAY_GAME}</Text>
       </Pressable>
       <Pressable onPress={toggleHowTo}>
         <Text style={globalStyles.columnButton}>{HOW_TO}</Text>
