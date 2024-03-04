@@ -146,4 +146,26 @@ export const globalStyles = StyleSheet.create({
     alignSelf: "flex-start",
     marginBottom: 20,
   },
+
+  announcement: {
+    flexDirection: "row",
+    position: "absolute",
+    height: 35,
+    justifyContent: "center",
+    alignSelf: "center",
+    borderRadius: 10,
+    shadowColor: COLOR_BLACK,
+    shadowOffset: {width: -2, height: 3},
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 3,
+    backgroundColor: COLOUR_BACKGROUND_CONTRAST,
+  },
+  announcementText: {
+    color: COLOUR_TEXT,
+    fontSize: 20,
+    textAlign: "center",
+    marginHorizontal: 5,
+    lineHeight: 32,
+  },
 });

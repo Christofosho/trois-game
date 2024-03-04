@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  ImageSourcePropType,
-  Pressable,
+  ImageSourcePropType, Pressable,
   SafeAreaView, StyleSheet, Text,
-  ToastAndroid, View,
+  View,
 } from "react-native";
+import { useDispatch } from "react-redux";
 
-import { globalStyles } from "../styles";
-import { Card, Match } from "../types";
+import { addAnnouncementToQueue } from "../actions/announcementsActions";
+
+import Cards from "../components/Cards";
 
 import {
   BASIC, COLOUR_TEXT, DRAW, END, MAX_HAND_SIZE,
@@ -21,11 +22,16 @@ import {
   VALUE, ZEN, MATCHES_NEEDED, secondInterval,
 } from "../constants";
 
-import { checkCards, drawThree, getNewDeck, shuffle } from "../utils/deck";
-import Cards from "../components/Cards";
+import { AppDispatch } from "../store";
 
-const toast = (message: string) => {
-  ToastAndroid.show(message, ToastAndroid.SHORT);
+import { globalStyles } from "../styles";
+
+import { Card, Match } from "../types";
+
+import { checkCards, drawThree, getNewDeck, shuffle } from "../utils/deck";
+
+const toast = (dispatch: AppDispatch, message: string) => {
+  addAnnouncementToQueue(dispatch, { value: message, location: "bottom", timeout: 3000 });
 };
 
 interface IGameBoardProps {
@@ -53,6 +59,8 @@ export default ({
   setView,
   startGame,
 }: IGameBoardProps) => {
+  const dispatch = useDispatch();
+
   const [deck, setDeck] = useState<Card[]>([]);
   const [hand, setHand] = useState<Card[]>([]);
 
@@ -87,16 +95,16 @@ export default ({
         let nextPoints = points;
         if (gameMode === MODE_BASIC) {
           nextPoints += 3;
-          toast(`${TOAST_MATCH_SUCCESS} ${TOAST_PLUS_THREE_POINTS}`);
+          toast(dispatch, `${TOAST_MATCH_SUCCESS} ${TOAST_PLUS_THREE_POINTS}`);
         }
         else {
           nextPoints += 1;
-          toast(`${TOAST_MATCH_SUCCESS} ${TOAST_PLUS_ONE_POINT}`);
+          toast(dispatch, `${TOAST_MATCH_SUCCESS} ${TOAST_PLUS_ONE_POINT}`);
         }
 
         setPoints(nextPoints);
         if (checkWin(nextPoints)) {
-          toast(TOAST_GAME_COMPLETE);
+          toast(dispatch, TOAST_GAME_COMPLETE);
           showGameSummary();
           return;
         }
@@ -125,7 +133,7 @@ export default ({
       else {
         if (gameMode === MODE_BASIC) {
           setPoints(Math.max(0, points - 1));
-          toast(`${TOAST_MATCH_FAILURE} ${TOAST_MINUS_ONE_POINT}`);
+          toast(dispatch, `${TOAST_MATCH_FAILURE} ${TOAST_MINUS_ONE_POINT}`);
         }
       }
 
@@ -175,12 +183,12 @@ export default ({
 
   const draw = () => {
     if (deck.length === 0) {
-      toast(TOAST_DECK_TOO_SMALL);
+      toast(dispatch, TOAST_DECK_TOO_SMALL);
       return;
     }
 
     if (hand.length >= MAX_HAND_SIZE) {
-      toast(TOAST_HAND_TOO_LARGE);
+      toast(dispatch, TOAST_HAND_TOO_LARGE);
       return;
     }
 
@@ -197,7 +205,7 @@ export default ({
       nextSelected = nextSelected.filter(s => s !== cardValue);
     }
     else if (selected.length === 3) {
-      toast(TOAST_THREE_SELECTED_MAX);
+      toast(dispatch, TOAST_THREE_SELECTED_MAX);
       return;
     }
     else {

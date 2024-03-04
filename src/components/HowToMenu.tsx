@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { /* Dispatch, SetStateAction, */ useState } from "react";
 
 import {
   StyleSheet, View, Text,
@@ -7,6 +7,7 @@ import {
 
 import {
   COLOUR_BORDER, COLOUR_TEXT, GAME_MODES, HOW_TO, MATCHES, NONE, MATCHES_NEEDED,
+  // INTERACTIVE_TUTORIAL,
 } from "../constants";
 
 import { globalStyles } from "../styles";
@@ -14,9 +15,10 @@ import { globalStyles } from "../styles";
 interface IHowToMenuProps {
   images: ImageSourcePropType[],
   toLanding: () => void,
+  // setTutorial: Dispatch<SetStateAction<number>>,
 }
 
-export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
+export default ({ images, toLanding/*, setTutorial */ }: IHowToMenuProps): JSX.Element => {
   const [howToVisible, setHowToVisible] = useState<number>(NONE);
 
   const toggleGameModes = () => (
@@ -25,6 +27,11 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
   const toggleMatches = () => (
     setHowToVisible(howToVisible === MATCHES ? NONE : MATCHES)
   );
+
+  // const enableTutorial = () => {
+  //   setTutorial(1);
+  //   toLanding();
+  // };
 
   const showHowToGameModes = howToVisible === GAME_MODES ? "flex" : "none";
   const showHowToMatches = howToVisible === MATCHES ? "flex" : "none";
@@ -35,7 +42,7 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
         <Pressable
           style={styles.closeButton}
           onPress={toLanding}>
-          <Text style={styles.closeButtonText}>x</Text>
+          <Text style={styles.closeButtonText}>X</Text>
         </Pressable>
       </View>
       <ScrollView style={globalStyles.content}>
@@ -47,6 +54,9 @@ export default ({ images, toLanding }: IHowToMenuProps): JSX.Element => {
           There are three different shapes, which come in three different counts,
           and can have three different fillings, and three different colours.
         </Text>
+        {/* <Pressable onPress={enableTutorial}>
+          <Text style={globalStyles.columnButton}>{INTERACTIVE_TUTORIAL}</Text>
+        </Pressable> */}
         <Pressable style={styles.howToToggle} onPress={toggleGameModes}>
           <Text style={[globalStyles.buttonText, globalStyles.toggleButtonText]}>Game Modes</Text>
           <Text style={globalStyles.buttonText}>{howToVisible === GAME_MODES ? "-" : "+"}</Text>
@@ -176,6 +186,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   closeButtonText: {
+    fontFamily: "Arial",
     fontSize: 28,
     color: COLOUR_TEXT,
   },

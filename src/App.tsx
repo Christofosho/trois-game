@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { Provider, useSelector } from "react-redux";
 
 import { GAME, HOW, LANDING, MODE, MODE_BASIC, SUMMARY } from "./constants";
 
+import Announcement from "./components/Announcement";
 import HowToMenu from "./components/HowToMenu";
 import Landing from "./components/Landing";
 import ModeSelector from "./components/ModeSelector";
 import GameSummary from "./components/GameSummary";
 import GameBoard from "./components/GameBoard";
+
+import { RootState, store } from "./store";
 
 import { Match } from "./types";
 
@@ -14,7 +18,9 @@ import getImages from "./utils/images";
 
 const images = getImages();
 
-export default () => {
+const App = () => {
+  const announcement = useSelector((state: RootState) => state.announcements.current);
+
   const [view, setView] = useState<number>(LANDING);
 
   const [points, setPoints] = useState<number>(0);
@@ -22,6 +28,8 @@ export default () => {
   const [time, setTime] = useState<number>(0);
   const [draws, setDraws] = useState<number>(0);
   const [matches, setMatches] = useState<Match[]>([]);
+
+  // const [tutorial, setTutorial] = useState<number>(0);
 
   const chooseMode = () => setView(MODE);
 
@@ -50,15 +58,18 @@ export default () => {
 
   const toggleHowTo = () => setView(HOW);
 
+  let main;
+
   switch (view) {
     case MODE:
-      return (
+      main = (
         <ModeSelector
           startGame={startGame}
         />
       );
+      break;
     case SUMMARY:
-      return (
+      main = (
         <GameSummary
           draws={draws}
           gameMode={gameMode}
@@ -70,15 +81,18 @@ export default () => {
           toLanding={toLanding}
         />
       );
+      break;
     case HOW:
-      return (
+      main = (
         <HowToMenu
           images={images}
           toLanding={toLanding}
+          // setTutorial={setTutorial}
         />
       );
+      break;
     case GAME:
-      return (
+      main = (
         <GameBoard
           gameMode={gameMode}
           images={images}
@@ -92,9 +106,10 @@ export default () => {
           startGame={startGame}
         />
       );
+      break;
     case LANDING:
     default:
-      return (
+      main = (
         <Landing
           chooseMode={chooseMode}
           toggleHowTo={toggleHowTo}
@@ -102,4 +117,28 @@ export default () => {
         />
       );
   }
+
+  let visibleAnnouncement = null;
+  if (announcement) {
+    visibleAnnouncement = (
+      <Announcement
+        location={announcement.location}
+        timeout={announcement.timeout}
+        value={announcement.value}
+      />
+    );
+  }
+
+  return (
+    <React.Fragment>
+      {main}
+      {visibleAnnouncement}
+    </React.Fragment>
+  );
 };
+
+export default () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);

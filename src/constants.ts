@@ -42,6 +42,7 @@ export const MATCHES_NEEDED = 10;
 export const TITLE = "Trois";
 export const PLAY_GAME = "Play Game";
 export const HOW_TO = "How to Play";
+export const INTERACTIVE_TUTORIAL = "Interactive Tutorial";
 export const RESTART = "Restart";
 export const END = "End";
 export const POINTS = "Points";
