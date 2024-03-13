@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Provider, useSelector } from "react-redux";
 
-import { GAME, HOW, LANDING, MODE, MODE_BASIC, SUMMARY } from "./constants";
+import { GAME, HOW, LANDING, MODE, MODE_BASIC, STATS, SUMMARY } from "./constants";
 
 import Announcement from "./components/Announcement";
 import HowToMenu from "./components/HowToMenu";
@@ -15,6 +15,7 @@ import { RootState, store } from "./store";
 import { Match } from "./types";
 
 import getImages from "./utils/images";
+import Statistics from "./components/Statistics";
 
 const images = getImages();
 
@@ -30,8 +31,6 @@ const App = () => {
   const [matches, setMatches] = useState<Match[]>([]);
 
   // const [tutorial, setTutorial] = useState<number>(0);
-
-  const chooseMode = () => setView(MODE);
 
   const getGameStartFunction = () => {
     startGame();
@@ -55,6 +54,10 @@ const App = () => {
   const toLanding = () => {
     setView(LANDING);
   };
+
+  const chooseMode = () => setView(MODE);
+
+  const showStatistics = () => setView(STATS);
 
   const toggleHowTo = () => setView(HOW);
 
@@ -107,11 +110,17 @@ const App = () => {
         />
       );
       break;
+    case STATS:
+      main = (
+        <Statistics toLanding={toLanding} />
+      );
+      break;
     case LANDING:
     default:
       main = (
         <Landing
           chooseMode={chooseMode}
+          showStatistics={showStatistics}
           toggleHowTo={toggleHowTo}
           images={images}
         />

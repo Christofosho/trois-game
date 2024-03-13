@@ -7,6 +7,7 @@ export const MODE = 1;
 export const GAME = 2;
 export const SUMMARY = 3;
 export const HOW = 4;
+export const STATS = 5;
 
 export const MODE_BASIC = 0;
 export const MODE_TIMED = 1;
@@ -62,3 +63,10 @@ export const TOAST_PLUS_ONE_POINT = "+1 point";
 export const TOAST_MINUS_ONE_POINT = "-1 point";
 export const TOAST_MATCH_FAILURE = "No match!";
 export const TOAST_GAME_COMPLETE = "Game over!";
+
+export const STATISTICS = "Statistics";
+export const GAMES = "Games";
+export const WINS = "Wins";
+export const DRAWS = "Draws";
+export const FAILS = "Fails";
+export const MOST_RECENT_GAME = "Most Recent Game";

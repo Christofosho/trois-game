@@ -1,14 +1,15 @@
 import React, { Image, ImageSourcePropType, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { TITLE, PLAY_GAME, HOW_TO } from "../constants";
+import { TITLE, PLAY_GAME, HOW_TO, STATISTICS } from "../constants";
 import { globalStyles } from "../styles";
 
 interface ILandingProps {
   chooseMode: () => void,
+  showStatistics: () => void,
   toggleHowTo: () => void,
   images: ImageSourcePropType[],
 }
 
-export default ({ chooseMode, toggleHowTo, images }: ILandingProps) => (
+export default ({ chooseMode, showStatistics, toggleHowTo, images }: ILandingProps) => (
   <SafeAreaView style={globalStyles.menu}>
     <View><Text style={[globalStyles.title, styles.title]}>{TITLE}</Text></View>
     <View style={[globalStyles.cardRow, styles.cardRow, styles.cardGap]}>
@@ -25,6 +26,9 @@ export default ({ chooseMode, toggleHowTo, images }: ILandingProps) => (
     <View style={globalStyles.buttonColumn}>
       <Pressable onPress={chooseMode}>
         <Text style={globalStyles.columnButton}>{PLAY_GAME}</Text>
+      </Pressable>
+      <Pressable onPress={showStatistics}>
+        <Text style={globalStyles.columnButton}>{STATISTICS}</Text>
       </Pressable>
       <Pressable onPress={toggleHowTo}>
         <Text style={globalStyles.columnButton}>{HOW_TO}</Text>

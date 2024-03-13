@@ -1,6 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Statistics } from "../types";
 
-export const store = async (key: string, value: Object): Promise<void> => {
+type StoredValue = Statistics;
+
+export const store = async (key: string, value: StoredValue): Promise<void> => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
   }
@@ -9,7 +12,7 @@ export const store = async (key: string, value: Object): Promise<void> => {
   }
 };
 
-export const get = async (key: string): Promise<Object | null> => {
+export const get = async (key: string): Promise<StoredValue | null> => {
   try {
     const value = await AsyncStorage.getItem(key);
     if (value) {

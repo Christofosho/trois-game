@@ -37,6 +37,14 @@ export const globalStyles = StyleSheet.create({
     shadowRadius: 1,
     elevation: 5,
   },
+  closeButton: {
+    marginRight: 20,
+  },
+  closeButtonText: {
+    fontFamily: "Arial",
+    fontSize: 28,
+    color: COLOUR_TEXT,
+  },
   content: {
     flex: 1,
     marginHorizontal: 10,

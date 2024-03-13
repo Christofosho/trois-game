@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import announcementsReducer from "./reducers/announcementsReducer";
+import statisticsReducer from "./reducers/statisticsReducer";
 
 export const store = configureStore({
   reducer: {
     announcements: announcementsReducer,
+    statistics: statisticsReducer,
   },
 });
 

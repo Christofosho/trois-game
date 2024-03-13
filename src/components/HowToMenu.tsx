@@ -40,9 +40,9 @@ export default ({ images, toLanding/*, setTutorial */ }: IHowToMenuProps): JSX.E
       <View style={globalStyles.header}>
         <Text style={styles.howToTitle}>{HOW_TO}</Text>
         <Pressable
-          style={styles.closeButton}
+          style={globalStyles.closeButton}
           onPress={toLanding}>
-          <Text style={styles.closeButtonText}>X</Text>
+          <Text style={globalStyles.closeButtonText}>X</Text>
         </Pressable>
       </View>
       <ScrollView style={globalStyles.content}>
@@ -181,14 +181,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: COLOUR_TEXT,
     marginLeft: 20,
-  },
-  closeButton: {
-    marginRight: 20,
-  },
-  closeButtonText: {
-    fontFamily: "Arial",
-    fontSize: 28,
-    color: COLOUR_TEXT,
   },
   howToContentText: {
     fontSize: 20,
