@@ -22,9 +22,18 @@ type Game = {
 };
 
 export type Statistics = {
-  games: number;
-  wins: number;
-  draws: number;
-  fails: number;
+  basic: {
+    games: number;
+    wins: number;
+    matches: number,
+    draws: number;
+    fails: number;
+  },
   last: Game | null;
+};
+
+export type GameBoard = {
+  points: number,
+  draws: number,
+  fails: number,
 };

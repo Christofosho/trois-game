@@ -2,10 +2,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Statistics } from "../types";
 
 const initialState = {
-  games: 0,
-  wins: 0,
-  draws: 0,
-  fails: 0,
+  basic: {
+    games: 0,
+    wins: 0,
+    matches: 0,
+    draws: 0,
+    fails: 0,
+  },
   last: null,
 } satisfies Statistics as Statistics;
 

@@ -67,6 +67,7 @@ export const TOAST_GAME_COMPLETE = "Game over!";
 export const STATISTICS = "Statistics";
 export const GAMES = "Games";
 export const WINS = "Wins";
+export const MATCHES_ = "Matches";
 export const DRAWS = "Draws";
 export const FAILS = "Fails";
 export const MOST_RECENT_GAME = "Most Recent Game";

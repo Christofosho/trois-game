@@ -24,10 +24,8 @@ const App = () => {
 
   const [view, setView] = useState<number>(LANDING);
 
-  const [points, setPoints] = useState<number>(0);
   const [gameMode, setGameMode] = useState<number>(MODE_BASIC);
   const [time, setTime] = useState<number>(0);
-  const [draws, setDraws] = useState<number>(0);
   const [matches, setMatches] = useState<Match[]>([]);
 
   // const [tutorial, setTutorial] = useState<number>(0);
@@ -37,9 +35,7 @@ const App = () => {
   };
 
   const startGame = (mode: number = gameMode) => {
-    setDraws(0);
     setGameMode(mode);
-    setPoints(0);
     setMatches([]);
     setView(GAME);
   };
@@ -74,10 +70,8 @@ const App = () => {
     case SUMMARY:
       main = (
         <GameSummary
-          draws={draws}
           gameMode={gameMode}
           matches={matches}
-          points={points}
           time={time}
           chooseMode={chooseMode}
           getGameStartFunction={getGameStartFunction}
@@ -99,11 +93,8 @@ const App = () => {
         <GameBoard
           gameMode={gameMode}
           images={images}
-          points={points}
           time={time}
           addSelection={addSelection}
-          setDraws={setDraws}
-          setPoints={setPoints}
           setTime={setTime}
           setView={setView}
           startGame={startGame}

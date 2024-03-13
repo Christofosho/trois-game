@@ -4,9 +4,10 @@ import {
   SafeAreaView, StyleSheet, Text,
   View,
 } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { addAnnouncementToQueue } from "../actions/announcementsActions";
+import { storeStatistics } from "../actions/statisticsActions";
 
 import Cards from "../components/Cards";
 
@@ -22,7 +23,9 @@ import {
   VALUE, ZEN, MATCHES_NEEDED, secondInterval,
 } from "../constants";
 
-import { AppDispatch } from "../store";
+import { updatePoints, updateDraws, updateFails } from "../reducers/gameReducer";
+
+import { AppDispatch, RootState } from "../store";
 
 import { globalStyles } from "../styles";
 
@@ -37,11 +40,8 @@ const toast = (dispatch: AppDispatch, message: string) => {
 interface IGameBoardProps {
   gameMode: number,
   images: ImageSourcePropType[],
-  points: number,
   time: number,
   addSelection: (_match: Match) => void,
-  setDraws: (_draws: (_t: number) => number) => void,
-  setPoints: (_points: number) => void,
   setTime: (_time: (_t: number) => number) => void,
   setView: (_view: number) => void,
   startGame: () => void,
@@ -50,16 +50,20 @@ interface IGameBoardProps {
 export default ({
   gameMode,
   images,
-  points,
   time,
   addSelection,
-  setDraws,
-  setPoints,
   setTime,
   setView,
   startGame,
 }: IGameBoardProps) => {
   const dispatch = useDispatch();
+
+  const statistics = useSelector((state: RootState) => state.statistics);
+  const points = useSelector((state: RootState) => state.game.points);
+  const draws = useSelector((state: RootState) => state.game.draws);
+  const fails = useSelector((state: RootState) => state.game.fails);
+
+  const [matches, setMatches] = useState<number>(0);
 
   const [deck, setDeck] = useState<Card[]>([]);
   const [hand, setHand] = useState<Card[]>([]);
@@ -92,6 +96,8 @@ export default ({
       });
 
       if (match) {
+        setMatches(m => m + 1);
+
         let nextPoints = points;
         if (gameMode === MODE_BASIC) {
           nextPoints += 3;
@@ -102,7 +108,7 @@ export default ({
           toast(dispatch, `${TOAST_MATCH_SUCCESS} ${TOAST_PLUS_ONE_POINT}`);
         }
 
-        setPoints(nextPoints);
+        dispatch(updatePoints(nextPoints));
         if (checkWin(nextPoints)) {
           toast(dispatch, TOAST_GAME_COMPLETE);
           showGameSummary();
@@ -131,8 +137,9 @@ export default ({
         setHand(nextHand);
       }
       else {
+        dispatch(updateFails(fails + 1));
         if (gameMode === MODE_BASIC) {
-          setPoints(Math.max(0, points - 1));
+          dispatch(updatePoints(Math.max(0, points - 1)));
           toast(dispatch, `${TOAST_MATCH_FAILURE} ${TOAST_MINUS_ONE_POINT}`);
         }
       }
@@ -195,7 +202,7 @@ export default ({
     const [nextDeck, nextHand] = drawThree(deck, hand);
     setDeck(nextDeck);
     setHand(nextHand);
-    setDraws(_d => ++_d);
+    dispatch(updateDraws(draws + 1));
     setSelected([]);
   };
 
@@ -216,6 +223,21 @@ export default ({
   };
 
   const showGameSummary = () => {
+    const win: number = Number(checkWin(points));
+    const nextStatistics = { ...statistics };
+    if (gameMode === MODE_BASIC) {
+      nextStatistics.basic = {
+        games: statistics.basic.games + 1,
+        wins: statistics.basic.wins + win,
+        matches: statistics.basic.matches + matches,
+        draws: statistics.basic.draws + draws,
+        fails: statistics.basic.fails + fails,
+      };
+    }
+    storeStatistics(dispatch, {
+      ...nextStatistics,
+      last: { matches, draws, fails, cards: [] },
+    });
     setView(SUMMARY);
   };
 
