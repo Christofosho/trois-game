@@ -1,12 +1,15 @@
-import React, { Pressable, SafeAreaView, Text, View } from "react-native";
+import React, { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
 import { globalStyles } from "../styles";
-import { BASIC, MODE_BASIC, MODE_TIMED, MODE_ZEN, TIMED, ZEN } from "../constants";
+import { BASIC, COLOUR_TEXT, MODE_BASIC, MODE_TIMED, MODE_ZEN, MODE_SELECTION, TIMED, ZEN } from "../constants";
 
 interface IModeSelectorProps {
   startGame: (_mode: number) => void,
+  toLanding: () => void,
 }
 
-export default ({ startGame }: IModeSelectorProps) => {
+export default ({ startGame, toLanding }: IModeSelectorProps) => {
   // Point based, 81 cards in the deck, 1 deck.
   const startGameBasic = () => startGame(MODE_BASIC);
 
@@ -19,18 +22,37 @@ export default ({ startGame }: IModeSelectorProps) => {
   const startGameZen = () => startGame(MODE_ZEN);
 
   return (
-    <SafeAreaView style={globalStyles.menu}>
-      <View style={globalStyles.buttonColumn}>
-        <Pressable onPress={startGameBasic}>
-          <Text style={globalStyles.columnButton}>{BASIC}</Text>
+    <SafeAreaView style={globalStyles.wrapper}>
+      <View style={globalStyles.header}>
+        <Text style={styles.modeSelectionTitle}>{MODE_SELECTION}</Text>
+        <Pressable
+          style={globalStyles.closeButton}
+          onPress={toLanding}>
+          <FontAwesomeIcon icon={faXmark} />
         </Pressable>
-        <Pressable onPress={startGameTimed}>
-          <Text style={globalStyles.columnButton}>{TIMED}</Text>
-        </Pressable>
-        <Pressable onPress={startGameZen}>
-          <Text style={globalStyles.columnButton}>{ZEN}</Text>
-        </Pressable>
+      </View>
+      <View style={globalStyles.menu}>
+        <View style={globalStyles.buttonColumn}>
+          <Pressable onPress={startGameBasic}>
+            <Text style={globalStyles.columnButton}>{BASIC}</Text>
+          </Pressable>
+          <Pressable onPress={startGameTimed}>
+            <Text style={globalStyles.columnButton}>{TIMED}</Text>
+          </Pressable>
+          <Pressable onPress={startGameZen}>
+            <Text style={globalStyles.columnButton}>{ZEN}</Text>
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  modeSelectionTitle: {
+    flex: 1,
+    fontSize: 32,
+    color: COLOUR_TEXT,
+    marginLeft: 10,
+  },
+});

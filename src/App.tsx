@@ -71,6 +71,7 @@ const App = () => {
       main = (
         <ModeSelector
           startGame={startGame}
+          toLanding={toLanding}
         />
       );
       break;

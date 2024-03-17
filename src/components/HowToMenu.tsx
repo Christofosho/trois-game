@@ -5,6 +5,9 @@ import {
   Pressable, ScrollView, Image,
   ImageSourcePropType } from "react-native";
 
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
+
 import {
   COLOUR_BORDER, COLOUR_TEXT, GAME_MODES, HOW_TO, MATCHES, NONE, MATCHES_NEEDED,
   // INTERACTIVE_TUTORIAL,
@@ -42,7 +45,7 @@ export default ({ images, toLanding/*, setTutorial */ }: IHowToMenuProps): JSX.E
         <Pressable
           style={globalStyles.closeButton}
           onPress={toLanding}>
-          <Text style={globalStyles.closeButtonText}>X</Text>
+          <FontAwesomeIcon icon={faXmark} />
         </Pressable>
       </View>
       <ScrollView style={globalStyles.content}>
@@ -180,7 +183,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 32,
     color: COLOUR_TEXT,
-    marginLeft: 20,
+    marginLeft: 10,
   },
   howToContentText: {
     fontSize: 20,
