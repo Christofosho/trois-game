@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Provider, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Provider, useDispatch, useSelector } from "react-redux";
 
 import { GAME, HOW, LANDING, MODE, MODE_BASIC, STATS, SUMMARY } from "./constants";
 
@@ -16,10 +16,13 @@ import { Match } from "./types";
 
 import getImages from "./utils/images";
 import Statistics from "./components/Statistics";
+import { loadStatistics } from "./actions/statisticsActions";
 
 const images = getImages();
 
 const App = () => {
+  const dispatch = useDispatch();
+
   const announcement = useSelector((state: RootState) => state.announcements.current);
 
   const [view, setView] = useState<number>(LANDING);
@@ -27,6 +30,10 @@ const App = () => {
   const [gameMode, setGameMode] = useState<number>(MODE_BASIC);
   const [time, setTime] = useState<number>(0);
   const [matches, setMatches] = useState<Match[]>([]);
+
+  useEffect(() => {
+    loadStatistics(dispatch);
+  });
 
   // const [tutorial, setTutorial] = useState<number>(0);
 
