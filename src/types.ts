@@ -13,3 +13,27 @@ export type Card = [
 export type CardAttribute = typeof SHAPE | typeof COUNT | typeof COLOUR | typeof FILL;
 
 export type Match = { match: Card[], success: boolean };
+
+type Game = {
+  matches: number;
+  draws: number;
+  fails: number;
+  cards: number[][]
+};
+
+export type Statistics = {
+  basic: {
+    games: number;
+    wins: number;
+    matches: number,
+    draws: number;
+    fails: number;
+  },
+  last: Game | null;
+};
+
+export type GameBoard = {
+  points: number,
+  draws: number,
+  fails: number,
+};

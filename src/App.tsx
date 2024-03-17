@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Provider, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Provider, useDispatch, useSelector } from "react-redux";
 
-import { GAME, HOW, LANDING, MODE, MODE_BASIC, SUMMARY } from "./constants";
+import { GAME, HOW, LANDING, MODE, MODE_BASIC, STATS, SUMMARY } from "./constants";
 
 import Announcement from "./components/Announcement";
 import HowToMenu from "./components/HowToMenu";
@@ -15,32 +15,34 @@ import { RootState, store } from "./store";
 import { Match } from "./types";
 
 import getImages from "./utils/images";
+import Statistics from "./components/Statistics";
+import { loadStatistics } from "./actions/statisticsActions";
 
 const images = getImages();
 
 const App = () => {
+  const dispatch = useDispatch();
+
   const announcement = useSelector((state: RootState) => state.announcements.current);
 
   const [view, setView] = useState<number>(LANDING);
 
-  const [points, setPoints] = useState<number>(0);
   const [gameMode, setGameMode] = useState<number>(MODE_BASIC);
   const [time, setTime] = useState<number>(0);
-  const [draws, setDraws] = useState<number>(0);
   const [matches, setMatches] = useState<Match[]>([]);
 
-  // const [tutorial, setTutorial] = useState<number>(0);
+  useEffect(() => {
+    loadStatistics(dispatch);
+  });
 
-  const chooseMode = () => setView(MODE);
+  // const [tutorial, setTutorial] = useState<number>(0);
 
   const getGameStartFunction = () => {
     startGame();
   };
 
   const startGame = (mode: number = gameMode) => {
-    setDraws(0);
     setGameMode(mode);
-    setPoints(0);
     setMatches([]);
     setView(GAME);
   };
@@ -56,6 +58,10 @@ const App = () => {
     setView(LANDING);
   };
 
+  const chooseMode = () => setView(MODE);
+
+  const showStatistics = () => setView(STATS);
+
   const toggleHowTo = () => setView(HOW);
 
   let main;
@@ -65,16 +71,15 @@ const App = () => {
       main = (
         <ModeSelector
           startGame={startGame}
+          toLanding={toLanding}
         />
       );
       break;
     case SUMMARY:
       main = (
         <GameSummary
-          draws={draws}
           gameMode={gameMode}
           matches={matches}
-          points={points}
           time={time}
           chooseMode={chooseMode}
           getGameStartFunction={getGameStartFunction}
@@ -96,15 +101,17 @@ const App = () => {
         <GameBoard
           gameMode={gameMode}
           images={images}
-          points={points}
           time={time}
           addSelection={addSelection}
-          setDraws={setDraws}
-          setPoints={setPoints}
           setTime={setTime}
           setView={setView}
           startGame={startGame}
         />
+      );
+      break;
+    case STATS:
+      main = (
+        <Statistics toLanding={toLanding} />
       );
       break;
     case LANDING:
@@ -112,6 +119,7 @@ const App = () => {
       main = (
         <Landing
           chooseMode={chooseMode}
+          showStatistics={showStatistics}
           toggleHowTo={toggleHowTo}
           images={images}
         />
