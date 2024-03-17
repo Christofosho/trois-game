@@ -223,9 +223,9 @@ export default ({
   };
 
   const showGameSummary = () => {
-    const win: number = Number(checkWin(points));
-    const nextStatistics = { ...statistics };
     if (gameMode === MODE_BASIC) {
+      const win: number = Number(checkWin(points));
+      const nextStatistics = { ...statistics };
       nextStatistics.basic = {
         games: statistics.basic.games + 1,
         wins: statistics.basic.wins + win,
@@ -233,11 +233,11 @@ export default ({
         draws: statistics.basic.draws + draws,
         fails: statistics.basic.fails + fails,
       };
+      storeStatistics(dispatch, {
+        ...nextStatistics,
+        last: { matches, draws, fails, cards: [] },
+      });
     }
-    storeStatistics(dispatch, {
-      ...nextStatistics,
-      last: { matches, draws, fails, cards: [] },
-    });
     setView(SUMMARY);
   };
 
