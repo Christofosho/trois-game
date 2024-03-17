@@ -22,39 +22,48 @@ export default ({ toLanding }: IStatistics) => {
         </Pressable>
       </View>
       <ScrollView style={globalStyles.content}>
-        <Text style={styles.heading}>Basic</Text>
-        <View style={styles.statisticsRow}>
-          <View>
-            <Text style={styles.text}>{GAMES}</Text>
-            <Text style={styles.text}>{statistics.basic.games}</Text>
-          </View>
-          <View>
-            <Text style={styles.text}>{MATCHES_}</Text>
-            <Text style={styles.text}>{statistics.basic.matches}</Text>
-          </View>
-          <View>
-            <Text style={styles.text}>{WINS}</Text>
-            <Text style={styles.text}>{statistics.basic.wins}</Text>
-          </View>
-          <View>
-            <Text style={styles.text}>{DRAWS}</Text>
-            <Text style={styles.text}>{statistics.basic.draws}</Text>
-          </View>
-          <View>
-            <Text style={styles.text}>{FAILS}</Text>
-            <Text style={styles.text}>{statistics.basic.fails}</Text>
-          </View>
-        </View>
         {statistics.last && (
         <View>
-          <Text style={styles.text}>{MOST_RECENT_GAME}</Text>
-          <View style={styles.statisticsRow}>
-            <Text style={styles.text}>{statistics.last?.matches}</Text>
-            <Text style={styles.text}>{statistics.last?.draws}</Text>
-            <Text style={styles.text}>{statistics.last?.fails}</Text>
+          <Text style={[styles.heading]}>{MOST_RECENT_GAME}</Text>
+          <View style={[styles.statisticsRow, globalStyles.hoveringBox]}>
+            <View>
+              <Text style={styles.text}>Matches</Text>
+              <Text style={styles.text}>{statistics.last?.matches}</Text>
+            </View>
+            <View>
+              <Text style={styles.text}>Draws</Text>
+              <Text style={styles.text}>{statistics.last?.draws}</Text>
+            </View>
+            <View>
+              <Text style={styles.text}>Fails</Text>
+              <Text style={styles.text}>{statistics.last?.fails}</Text>
+            </View>
           </View>
         </View>
         )}
+        <Text style={styles.heading}>Basic Mode Summary</Text>
+        <View style={[styles.statisticsRow, globalStyles.hoveringBox]}>
+          <View>
+            <Text style={[styles.text, styles.statisticHeading]}>{GAMES}</Text>
+            <Text style={styles.text}>{statistics.basic.games}</Text>
+          </View>
+          <View>
+            <Text style={[styles.text, styles.statisticHeading]}>{MATCHES_}</Text>
+            <Text style={styles.text}>{statistics.basic.matches}</Text>
+          </View>
+          <View>
+            <Text style={[styles.text, styles.statisticHeading]}>{WINS}</Text>
+            <Text style={styles.text}>{statistics.basic.wins}</Text>
+          </View>
+          <View>
+            <Text style={[styles.text, styles.statisticHeading]}>{DRAWS}</Text>
+            <Text style={styles.text}>{statistics.basic.draws}</Text>
+          </View>
+          <View>
+            <Text style={[styles.text, styles.statisticHeading]}>{FAILS}</Text>
+            <Text style={styles.text}>{statistics.basic.fails}</Text>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -63,16 +72,21 @@ export default ({ toLanding }: IStatistics) => {
 const styles = StyleSheet.create({
   statisticsRow: {
     flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginBottom: 10,
   },
   heading: {
     fontSize: 24,
     textAlign: "center",
     color: COLOUR_TEXT,
+    marginBottom: 5,
   },
   text: {
     fontSize: 20,
     color: COLOUR_TEXT,
-    marginHorizontal: 10,
-    marginBottom: 15,
+    textAlign: "center",
+  },
+  statisticHeading: {
+    marginRight: 5,
   },
 });
