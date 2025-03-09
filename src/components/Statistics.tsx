@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
 
 import { RootState } from "../store";
-import { COLOUR_TEXT, DRAWS, MISTAKES, GAMES, MATCHES_, MOST_RECENT_GAME, STATISTICS, WINS } from "../constants";
+import { BEST_SCORE, COLOUR_TEXT, DRAWS, MISTAKES, GAMES, MATCHES_, MOST_RECENT_GAME, STATISTICS, WINS } from "../constants";
 import { globalStyles } from "../styles";
 
 interface IStatistics {
@@ -53,20 +53,12 @@ export default ({ toLanding }: IStatistics) => {
             <Text style={styles.text}>{statistics.basic.games}</Text>
           </View>
           <View>
-            <Text style={styles.text}>{MATCHES_}</Text>
-            <Text style={styles.text}>{statistics.basic.matches}</Text>
-          </View>
-          <View>
             <Text style={styles.text}>{WINS}</Text>
             <Text style={styles.text}>{statistics.basic.wins}</Text>
           </View>
           <View>
-            <Text style={styles.text}>{DRAWS}</Text>
-            <Text style={styles.text}>{statistics.basic.draws}</Text>
-          </View>
-          <View>
-            <Text style={styles.text}>{MISTAKES}</Text>
-            <Text style={styles.text}>{statistics.basic.fails}</Text>
+            <Text style={styles.text}>{BEST_SCORE}</Text>
+            <Text style={styles.text}>{statistics.basic.best}</Text>
           </View>
         </View>
       </ScrollView>

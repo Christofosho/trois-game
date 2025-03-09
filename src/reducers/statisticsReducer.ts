@@ -8,6 +8,7 @@ const initialState = {
     matches: 0,
     draws: 0,
     fails: 0,
+    best: 0,
   },
   last: null,
 } satisfies Statistics as Statistics;

@@ -1,4 +1,4 @@
-import React, { Image, ImageSourcePropType, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React, { Image, ImageSourcePropType, Pressable, StyleSheet, Text, View } from "react-native";
 import { TITLE, PLAY_GAME, HOW_TO, STATISTICS } from "../constants";
 import { globalStyles } from "../styles";
 
@@ -10,7 +10,7 @@ interface ILandingProps {
 }
 
 export default ({ chooseMode, showStatistics, toggleHowTo, images }: ILandingProps) => (
-  <SafeAreaView style={globalStyles.menu}>
+  <View style={globalStyles.menu}>
     <View><Text style={[globalStyles.title, styles.title]}>{TITLE}</Text></View>
     <View style={[globalStyles.cardRow, styles.cardRow, styles.cardGap]}>
       <View style={globalStyles.card}>
@@ -34,7 +34,7 @@ export default ({ chooseMode, showStatistics, toggleHowTo, images }: ILandingPro
         <Text style={globalStyles.columnButton}>{HOW_TO}</Text>
       </Pressable>
     </View>
-  </SafeAreaView>
+  </View>
 );
 
 const styles = StyleSheet.create({

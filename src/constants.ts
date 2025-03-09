@@ -72,3 +72,4 @@ export const MATCHES_ = "Matches";
 export const DRAWS = "Draws";
 export const MISTAKES = "Mistakes";
 export const MOST_RECENT_GAME = "Most Recent Game";
+export const BEST_SCORE = "Best Score";

@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   ImageSourcePropType, Pressable,
-  SafeAreaView, StyleSheet, Text,
-  View,
+  StyleSheet, Text, View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -71,14 +70,14 @@ export default ({
   // selected: A list of indicies found in hand.
   const [selected, setSelected] = useState<number[]>([]);
 
-  const timer = useRef<number>();
+  const timer = useRef<NodeJS.Timeout>(undefined);
 
   useEffect(() => {
     getHandAndDeck();
     tryStartTimer();
     return () => {
       if (timer) {
-        clearInterval(timer.current as number);
+        clearInterval(timer.current);
       }
     };
 
@@ -166,6 +165,10 @@ export default ({
   };
 
   const restartGame = () => {
+    dispatch(updatePoints(0));
+    dispatch(updateDraws(0));
+    dispatch(updateFails(0));
+
     getHandAndDeck();
     setSelected([]);
 
@@ -176,7 +179,7 @@ export default ({
 
   const tryStartTimer = () => {
     if (timer){
-      clearInterval(timer.current as number);
+      clearInterval(timer.current);
     }
     if (gameMode === MODE_TIMED) {
       setTime(_t => 0);
@@ -232,6 +235,7 @@ export default ({
         matches: statistics.basic.matches + matches,
         draws: statistics.basic.draws + draws,
         fails: statistics.basic.fails + fails,
+        best: Math.max(statistics.basic.best, points),
       };
       storeStatistics(dispatch, {
         ...nextStatistics,
@@ -242,7 +246,7 @@ export default ({
   };
 
   return (
-    <SafeAreaView style={globalStyles.wrapper}>
+    <View style={globalStyles.wrapper}>
       <View style={globalStyles.header}>
         <Text style={[globalStyles.buttonText, globalStyles.gameButton, globalStyles.gameButtonLeft]}>{TITLE}</Text>
         <Text style={globalStyles.gameTitle}>{
@@ -267,7 +271,7 @@ export default ({
           <Text style={globalStyles.buttonText}>{DRAW}</Text>
         </Pressable>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

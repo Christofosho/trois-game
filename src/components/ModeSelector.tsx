@@ -1,4 +1,4 @@
-import React, { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React, { Pressable, StyleSheet, Text, View } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
 import { globalStyles } from "../styles";
@@ -22,7 +22,7 @@ export default ({ startGame, toLanding }: IModeSelectorProps) => {
   const startGameZen = () => startGame(MODE_ZEN);
 
   return (
-    <SafeAreaView style={globalStyles.wrapper}>
+    <View style={globalStyles.wrapper}>
       <View style={globalStyles.header}>
         <Text style={styles.modeSelectionTitle}>{MODE_SELECTION}</Text>
         <Pressable
@@ -44,7 +44,7 @@ export default ({ startGame, toLanding }: IModeSelectorProps) => {
           </Pressable>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
