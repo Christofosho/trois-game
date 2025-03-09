@@ -28,6 +28,7 @@ export type Statistics = {
     matches: number,
     draws: number;
     fails: number;
+    best: number;
   },
   last: Game | null;
 };

@@ -21,7 +21,7 @@ interface IHowToMenuProps {
   // setTutorial: Dispatch<SetStateAction<number>>,
 }
 
-export default ({ images, toLanding/*, setTutorial */ }: IHowToMenuProps): JSX.Element => {
+export default ({ images, toLanding/*, setTutorial */ }: IHowToMenuProps): React.JSX.Element => {
   const [howToVisible, setHowToVisible] = useState<number>(NONE);
 
   const toggleGameModes = () => (

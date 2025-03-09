@@ -2,13 +2,14 @@ import React, {
   View, Text, Pressable,
   Image, ScrollView, StyleSheet,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/AntDesign";
 
 import { GAME_SUMMARY, IMAGE, MODE_BASIC, MODE_TIMED, MODE_ZEN } from "../constants";
 import { RootState } from "../store";
 import { globalStyles } from "../styles";
 import { Match } from "../types";
+import { updateDraws, updateFails, updatePoints } from "../reducers/gameReducer";
 
 interface IGameSummaryProps {
   gameMode: number,
@@ -27,9 +28,33 @@ export default ({
   getGameStartFunction,
   toLanding,
 }: IGameSummaryProps) => {
+  const dispatch = useDispatch();
+
   const points = useSelector((state: RootState) => state.game.points);
   const draws = useSelector((state: RootState) => state.game.draws);
   const fails = useSelector((state: RootState) => state.game.fails);
+
+  const menu = () => {
+    dispatch(updatePoints(0));
+    dispatch(updateDraws(0));
+    dispatch(updateFails(0));
+    toLanding();
+  };
+
+  const again = () => {
+    dispatch(updatePoints(0));
+    dispatch(updateDraws(0));
+    dispatch(updateFails(0));
+    getGameStartFunction();
+  };
+
+  const newGame = () => {
+    dispatch(updatePoints(0));
+    dispatch(updateDraws(0));
+    dispatch(updateFails(0));
+    chooseMode();
+  };
+
   return (
     <View style={globalStyles.wrapper}>
       <View style={globalStyles.header}>
@@ -38,13 +63,13 @@ export default ({
       <View style={globalStyles.content}>
         {gameMode === MODE_TIMED
         ? <Text style={globalStyles.buttonText}>{points} matches in {time} seconds</Text>
-        : <Text style={globalStyles.buttonText}>Final Score: {points}{gameMode === MODE_BASIC ? "/ 81" : ""} ({fails} mistake{fails > 1 && "s"})</Text>}
+        : <Text style={globalStyles.buttonText}>Final Score: {points}{gameMode === MODE_BASIC ? " / 81" : ""} ({fails} mistake{fails > 1 && "s"})</Text>}
         {gameMode !== MODE_ZEN && <Text style={globalStyles.buttonText}>Total draw count: {draws}</Text>}
         {matches.length > 0 && <View style={globalStyles.horizontalRule} />}
         <ScrollView>
         {matches.map((match, index: number) => {
           return (
-            <View key={index} style={styles.matchrow}>
+            <View style={styles.matchrow}>
               <View style={styles.index}>
                 <Text style={styles.indexText}>{index + 1}</Text>
               </View>
@@ -71,13 +96,13 @@ export default ({
         </ScrollView>
       </View>
       <View style={globalStyles.footer}>
-        <Pressable style={[globalStyles.gameButton, globalStyles.gameButtonLeft]} onPress={toLanding}>
+        <Pressable style={[globalStyles.gameButton, globalStyles.gameButtonLeft]} onPress={menu}>
           <Text style={globalStyles.buttonText}>Menu</Text>
         </Pressable>
-        <Pressable style={globalStyles.gameButton} onPress={getGameStartFunction}>
+        <Pressable style={globalStyles.gameButton} onPress={again}>
           <Text style={globalStyles.buttonText}>Again</Text>
         </Pressable>
-        <Pressable style={[globalStyles.gameButton, globalStyles.gameButtonRight]} onPress={chooseMode}>
+        <Pressable style={[globalStyles.gameButton, globalStyles.gameButtonRight]} onPress={newGame}>
           <Text style={globalStyles.buttonText}>New</Text>
         </Pressable>
       </View>
